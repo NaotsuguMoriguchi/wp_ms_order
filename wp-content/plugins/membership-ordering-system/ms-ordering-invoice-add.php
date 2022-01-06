@@ -127,7 +127,7 @@
     <div style="margin-right:5px">
         <div>配送先住所</div>
         <div>
-            <input type="text" name="address" id="address" readonly style="width:170px" onchange="">
+            <input type="text" name="address" id="address" readonly style="width:345px" onchange="">
             <!-- <datalist id="client_list"> 
             </datalist> -->
         </div>
@@ -366,8 +366,8 @@
 
         var markup = "<tr><td class='d-none2'>"+(jQuery('table tbody tr').length)+"</td><td>" + jQuery("#invoice_date").val() + "</td><td>" + jQuery("#invoice_num").val() + "</td><td>" + jQuery("#client").val() + 
                     "</td><td class='d-none1'>" + jQuery("#address").val() + "</td>"+ "<td>" + jQuery("#product_list option[value="+jQuery("#product_list").val()+"]").html() +
-                    "</td><td class='d-none2'>" + jQuery("#price").val() + 
-                    "</td><td class='d-none2'>" + jQuery("#cnt").val() + "</td>"+ "<td class='d-none1 money'>" + jQuery("#money").val() + "</td>";
+                    "</td><td class='d-none2'>" + parseFloat(jQuery("#price").val()).toLocaleString() + 
+                    "円</td><td class='d-none2'>" + parseFloat(jQuery("#cnt").val()).toLocaleString() + "</td>" + "<td class='d-none1'>" + parseFloat(jQuery("#money").val()).toLocaleString() + "円<span class='money' style='display:none'>"+jQuery("#money").val()+"</span></td>";
             // markup += "<td class='d-none2'>" + jQuery("#delivery_date").val() + "</td>";
             markup += "</tr>";
         jQuery("table tbody").append(markup);

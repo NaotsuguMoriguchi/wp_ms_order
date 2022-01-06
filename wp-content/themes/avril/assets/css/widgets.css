@@ -677,6 +677,11 @@ form input[type="email"]:focus + .av-search-submit {
     border-radius: 50%;
 }
 
+.footer-main .calendar_wrap table th, 
+.footer-main .calendar_wrap table td {
+    line-height: 35px;
+}
+
 .calendar_wrap table th {
     color: #242424;
     background: none;
@@ -1564,4 +1569,8 @@ ul.wp-block-social-links li a {
 
 .footer .wp-block-calendar table caption {
     color: #fff;
+}
+
+.footer-section .wp-block-table td {
+    color: #000;
 }

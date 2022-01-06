@@ -10,7 +10,11 @@ if($avril_hs_breadcrumb == '1') {
                         <div class="breadcrumb-heading">
 								<h2>
 									<?php 
-										if ( is_day() ) : 
+										if ( is_home() || is_front_page()):
+	
+												single_post_title();
+												
+										elseif ( is_day() ) : 
 										
 											printf( __( 'Daily Archives: %s', 'avril' ), get_the_date() );
 										
@@ -54,4 +58,7 @@ if($avril_hs_breadcrumb == '1') {
             </div>
         </div> <!-- container -->
     </section>
-<?php } ?>	
+<?php }else{ ?>	
+<section id="breadcrumb-section" class="no-breadcrumb-area">
+</section>
+<?php } ?>

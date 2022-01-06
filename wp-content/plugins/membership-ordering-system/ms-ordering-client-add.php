@@ -452,10 +452,10 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
             jQuery('#mail').addClass('errors');
             return;
         }
-        if(jQuery.trim(jQuery('#shipping_info').val()) == ''){
-            jQuery('#shipping_info').addClass('errors');
-            return;
-        }
+        // if(jQuery.trim(jQuery('#shipping_info').val()) == ''){
+        //     jQuery('#shipping_info').addClass('errors');
+        //     return;
+        // }
         if(!isEmail(jQuery.trim(jQuery('#mail').val()))){
             jQuery('#mail').select();
             jQuery('#mail').addClass('errors');
@@ -471,7 +471,9 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
         var id = jQuery('#id').val();
         if(id == '')
             return;
-        jQuery('#createuser').submit();
+        if(confirm('削除しますか?')){
+            jQuery('#createuser').submit();
+        }
     });
     function isEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;

@@ -342,14 +342,16 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 		jQuery("body").on("click", ".item_delete", function(e) {
 			var _select = 0;
 			jQuery('.shop_select').each(function(){
-				console.log(jQuery(this).prop('checked'));
+				// console.log(jQuery(this).prop('checked'));
 				if(jQuery(this).prop('checked'))
 					_select = 1;
 			});
 			if(_select == 0)
 				return;
-			jQuery('#del').val(1);
-			jQuery('#shop_form').submit();
+			if(confirm('削除しますか?')){
+				jQuery('#del').val(1);
+				jQuery('#shop_form').submit();
+			}
 		});
 	});
 </script>

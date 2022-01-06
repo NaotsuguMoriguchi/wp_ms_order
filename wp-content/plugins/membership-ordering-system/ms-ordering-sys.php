@@ -248,6 +248,14 @@ if($num_of_pages > 1){
     </div>
 </div>
 <?php
+}else{
+?>
+<div class="tablenav top">
+    <div class="tablenav-pages one-page">
+        <span class="displaying-num"><?php echo $total ?> アイテム</span>
+    </div>
+</div>
+<?php
 }
 ?>
 <table class="wp-list-table widefat fixed striped table-view-list posts">
@@ -336,6 +344,14 @@ if($num_of_pages > 1){
     </div>
 </div>
 <?php
+}else{
+?>
+<div class="tablenav bottom">
+    <div class="tablenav-pages one-page">
+        <span class="displaying-num"><?php echo $total ?> アイテム</span>
+    </div>
+</div>
+<?php 
 }
 ?>
 <div class="modal fade" id="modal_table_2" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -471,16 +487,16 @@ var myModal = null;
                     });
                     var s = "";
                     for(var i=0;i<dList.length;i++){
-                        s += '<tr data-id="'+dList[i].history_id+'" class="h_item iedit author-self level-0 post-83 type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
+                        s += '<tr data-id="'+dList[i].history_id+'" class="iedit author-self level-0 post-83 type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
                         s += '<td class="product_tag column-product_tag d-none2">'+(i+1)+'</td>';
                         s += '<td class="product_tag column-product_tag d-none2">'+dList[i].invoice_date+'</td>';
                         s += '<td class="product_tag column-product_tag">'+dList[i].invoice_num+'</td>';
                         s += '<td class="product_tag column-product_tag">'+dList[i].client+'</td>';
                         s += '<td class="product_tag column-product_tag d-none1">'+dList[i].address+'</td>';
                         s += '<td class="product_tag column-product_tag">'+dList[i].product_list+'</td>';
-                        s += '<td class="product_tag column-product_tag d-none2">'+dList[i].price+'</td>';
-                        s += '<td class="product_tag column-product_tag d-none2">'+dList[i].cnt+'</td>';
-                        s += '<td class="product_tag column-product_tag d-none1">'+dList[i].money+'</td>';
+                        s += '<td class="product_tag column-product_tag d-none2">'+parseFloat(dList[i].price).toLocaleString()+'円</td>';
+                        s += '<td class="product_tag column-product_tag d-none2">'+parseFloat(dList[i].cnt).toLocaleString()+'</td>';
+                        s += '<td class="product_tag column-product_tag d-none1">'+parseFloat(dList[i].money).toLocaleString()+'円</td>';
                         s += '<td class="product_tag column-product_tag d-none2">'+dList[i].delivery_date+'</td>';
                         s += '</tr>';
                     }

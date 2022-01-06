@@ -367,6 +367,8 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
         var id = jQuery('#id').val();
         if(id == '')
             return;
-        jQuery('#createuser').submit();
+        if(confirm('削除しますか?')){
+            jQuery('#createuser').submit();
+        }
     });
 </script>

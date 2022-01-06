@@ -306,8 +306,10 @@ if($s != ''){
 			});
 			if(_select == 0)
 				return;
-			jQuery('#del').val(1);
-			jQuery('#shop_form').submit();
+			if(confirm('削除しますか?')){
+				jQuery('#del').val(1);
+				jQuery('#shop_form').submit();
+			}
 		});
 	});
 </script>

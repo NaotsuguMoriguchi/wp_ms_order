@@ -36,7 +36,7 @@ class membershipOrderingSystemPlug
 
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+            time datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             shop_name varchar(100) NOT NULL,
             img text NOT NULL,        
             shop_post varchar(100) NULL,        
@@ -57,7 +57,7 @@ class membershipOrderingSystemPlug
 
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+            time datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             name varchar(100) NOT NULL,
             img text NOT NULL,  
             shop_id varchar(200) NOT NULL,
@@ -79,7 +79,7 @@ class membershipOrderingSystemPlug
 
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+            time datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             name varchar(100) NOT NULL,
             shop varchar(100) NULL,
             shop_id varchar(100) NULL,
@@ -98,9 +98,9 @@ class membershipOrderingSystemPlug
 
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+            time datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             history_id varchar(100) NULL,
-            invoice_date date DEFAULT '0000-00-00 00:00:00' NOT NULL,
+            invoice_date date DEFAULT CURRENT_TIMESTAMP NOT NULL,
             invoice_num varchar(100) NULL,
             client varchar(100) NULL,
             client_id varchar(20) DEFAULT '' NOT NULL,
@@ -121,9 +121,9 @@ class membershipOrderingSystemPlug
 
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            time varchar(100) DEFAULT '' NOT NULL,
+            time datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             history_id varchar(100) DEFAULT '' NOT NULL,
-            invoice_date date DEFAULT '' NOT NULL,
+            invoice_date date DEFAULT CURRENT_TIMESTAMP NOT NULL,
             invoice_num varchar(100) NULL,
             client varchar(100) NULL,     
             client_id varchar(100) DEFAULT '' NOT NULL, 

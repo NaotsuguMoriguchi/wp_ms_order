@@ -168,7 +168,7 @@ if(isset($_REQUEST['to']) && $_REQUEST['to'] == 'clients'){
 									'label'=>$client->name, 
 									'value'=>$client->name, 
 									'shop'=>$client->shop_id, 
-									'address'=>!empty($client->shipping_info) ? $client->shipping_info : $client->address
+									'address'=>!empty($client->shipping_info) ? $client->shipping_info : $client->client_pref.'   '.$client->client_city.'  '.$client->address
 								));
 			}
 		}
@@ -339,8 +339,13 @@ if(isset($_REQUEST['to']) && $_REQUEST['to'] == "save_product"){
     $content = include "email-template.php";
 
     // echo $content;
-    wp_mail($client_mail, $subject, $content);
+	$headers = array('Content-Type: text/html; charset=UTF-8');
+	$headers[] = 'From: '.$_shop->shop_name.' <'.$_shop->mail.'>';
+	//$headers[] = 'Cc: John Q Codex <jqc@wordpress.org>';
+	// echo $content;
+    wp_mail($client_mail, $subject, $content, $headers);
 	//echo "Ok";
+
 	echo 'ok';
 	exit;
 } 

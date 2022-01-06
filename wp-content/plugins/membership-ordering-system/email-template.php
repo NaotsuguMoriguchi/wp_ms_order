@@ -7,9 +7,9 @@
 	$html .= "<p>何卒宜しくお願い申し上げます。</p>";
 	$html .= "<hr>";
 	$html .= "<p><h2>".$_shop->shop_name."</h2></p>";
-	$html .= "<p><h2>".$_shop->shop_pref.'&nbsp;&nbsp;'.$_shop->shop_city.'&nbsp;&nbsp;'.$_shop->shop_address."</h2></p>";
-	$html .= "<p><h2>".$_shop->tel."（営業時間：平日9:00～17:00）</h2></p>";
-	$html .= "<p><h2>E-Mail：".$_shop->mail."</h2></p>";
-	$html .= "<p><a href='http://10.10.10.183/wordpress/sample-page/?invoice=".$history_id."'>http://10.10.10.183/wordpress/sample-page/?invoice=".$history_id."</a></p>";
+	$html .= "<p>".$_shop->shop_pref.'&nbsp;&nbsp;'.$_shop->shop_city.'&nbsp;&nbsp;'.$_shop->shop_address."</p>";
+	$html .= "<p>".$_shop->tel."（営業時間：平日9:00～17:00）</p>";
+	$html .= "<p>E-Mail：".$_shop->mail."</p>";
+	$html .= "<p><a href='".get_bloginfo('url')."/sample-page/?invoice=".$history_id."'>".get_bloginfo('url')."/sample-page/?invoice=".$history_id."</a></p>";
 	return $html;
 ?>

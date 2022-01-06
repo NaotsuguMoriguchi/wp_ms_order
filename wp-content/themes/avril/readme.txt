@@ -4,8 +4,8 @@ Contributors: Nayrathemes
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 1.0.84
-Version: 1.0.84
+Stable tag: 1.0.87
+Version: 1.0.87
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: one-column, two-columns, right-sidebar, flexible-header, custom-background, custom-colors, custom-header, custom-menu,  custom-logo, featured-image-header, featured-images, footer-widgets, full-width-template, sticky-post, theme-options, threaded-comments, translation-ready, blog, photography, portfolio, editor-style, grid-layout
@@ -94,6 +94,15 @@ Info Hover, Smile, Shadow & All other Images have been used in images folder, Cr
 
 
 == Changelog ==
+
+@version 1.0.87
+*Fixed Blog Page Breadcrumb Title Issue
+
+@version 1.0.86
+*Fixed Footer Widget Calendar Line Height Issue
+
+@version 1.0.85
+*Fixed Footer Widget Block Table Color Issue
 
 @version 1.0.84
 *Fixed Footer Widget Block Calendar Caption Color Issue

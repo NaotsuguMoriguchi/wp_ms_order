@@ -411,10 +411,10 @@ if(isset($_REQUEST['i']) && !empty($_REQUEST['i'])){
             jQuery('#mail').addClass('errors');
             return;
         }
-        if(jQuery.trim(jQuery('#invoice_info').val()) == ''){
-            jQuery('#invoice_info').addClass('errors');
-            return;
-        }
+        // if(jQuery.trim(jQuery('#invoice_info').val()) == ''){
+        //     jQuery('#invoice_info').addClass('errors');
+        //     return;
+        // }
         if(!isEmail(jQuery.trim(jQuery('#mail').val()))){
             jQuery('#mail').select();
             jQuery('#mail').addClass('errors');
@@ -430,7 +430,9 @@ if(isset($_REQUEST['i']) && !empty($_REQUEST['i'])){
         var id = jQuery('#id').val();
         if(id == '')
             return;
-        jQuery('#createuser').submit();
+        if(confirm('削除しますか?')){
+            jQuery('#createuser').submit();
+        }
     });
     function isEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
