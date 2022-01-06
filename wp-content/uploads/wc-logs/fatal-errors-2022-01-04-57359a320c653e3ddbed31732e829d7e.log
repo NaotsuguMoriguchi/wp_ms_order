@@ -1,0 +1,16 @@
+2022-01-04T05:40:14+00:00 CRITICAL Maximum execution time of 120 seconds exceeded in E:\xampp\htdocs\wordpress\wp-content\plugins\wp-user-manager\includes\wpum-admin\class-wpum-html-elements.php on line 11
+
+2022-01-04T05:40:55+00:00 CRITICAL Maximum execution time of 120 seconds exceeded in E:\xampp\htdocs\wordpress\wp-includes\widgets\class-wp-widget-pages.php on line 17
+
+2022-01-04T09:26:27+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop.php on line 10
+
+2022-01-04T12:23:13+00:00 CRITICAL syntax error, unexpected 'echo' (T_ECHO), expecting ',' or ';' in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-products.php on line 170
+
+2022-01-04T14:36:18+00:00 CRITICAL Only variables can be passed by reference in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php on line 37
+
+2022-01-04T14:36:32+00:00 CRITICAL Only variables can be passed by reference in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php on line 37
+
+2022-01-04T14:37:09+00:00 CRITICAL Only variables can be passed by reference in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php on line 37
+
+2022-01-04T14:37:29+00:00 CRITICAL Only variables can be passed by reference in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php on line 55
+

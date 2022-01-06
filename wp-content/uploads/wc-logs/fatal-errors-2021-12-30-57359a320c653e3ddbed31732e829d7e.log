@@ -1,0 +1,26 @@
+2021-12-30T09:33:20+00:00 CRITICAL Uncaught Error: Cannot use object of type stdClass as array in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-invoice-email.php:31
+Stack trace:
+#0 E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\membership-ordering-system.php(203): include()
+#1 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(303): membershipOrderingSystemPlug->custom_callback_function('\n<p>This is an ...')
+#2 E:\xampp\htdocs\wordpress\wp-includes\plugin.php(189): WP_Hook->apply_filters('\n<p>This is an ...', Array)
+#3 E:\xampp\htdocs\wordpress\wp-includes\post-template.php(253): apply_filters('the_content', '<!-- wp:paragra...')
+#4 E:\xampp\htdocs\wordpress\wp-content\themes\avril\page.php(24): the_content()
+#5 E:\xampp\htdocs\wordpress\wp-includes\template-loader.php(106): include('E:\\xampp\\htdocs...')
+#6 E:\xampp\htdocs\wordpress\wp-blog-header.php(19): require_once('E:\\xampp\\htdocs...')
+#7 E:\xampp\htdocs\wordpress\index.php(17): require('E:\\xampp\\htdocs...')
+#8 {main}
+  th in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-invoice-email.php on line 31
+
+2021-12-30T09:33:44+00:00 CRITICAL Uncaught Error: Cannot use object of type stdClass as array in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-invoice-email.php:32
+Stack trace:
+#0 E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\membership-ordering-system.php(203): include()
+#1 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(303): membershipOrderingSystemPlug->custom_callback_function('\n<p>This is an ...')
+#2 E:\xampp\htdocs\wordpress\wp-includes\plugin.php(189): WP_Hook->apply_filters('\n<p>This is an ...', Array)
+#3 E:\xampp\htdocs\wordpress\wp-includes\post-template.php(253): apply_filters('the_content', '<!-- wp:paragra...')
+#4 E:\xampp\htdocs\wordpress\wp-content\themes\avril\page.php(24): the_content()
+#5 E:\xampp\htdocs\wordpress\wp-includes\template-loader.php(106): include('E:\\xampp\\htdocs...')
+#6 E:\xampp\htdocs\wordpress\wp-blog-header.php(19): require_once('E:\\xampp\\htdocs...')
+#7 E:\xampp\htdocs\wordpress\index.php(17): require('E:\\xampp\\htdocs...')
+#8 {main}
+  th in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-invoice-email.php on line 32
+

@@ -1,0 +1,4 @@
+2021-12-25T01:55:41+00:00 CRITICAL Maximum execution time of 120 seconds exceeded in E:\xampp\htdocs\wordpress\wp-includes\Requests\Transport\cURL.php on line 484
+
+2021-12-25T02:34:55+00:00 CRITICAL Maximum execution time of 120 seconds exceeded in E:\xampp\htdocs\wordpress\wp-includes\Requests\Transport\cURL.php on line 484
+

@@ -1,0 +1,10 @@
+2022-01-06T11:29:43+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function add_menu_page(), 1 passed in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\membership-ordering-system.php on line 152 and at least 4 expected in E:\xampp\htdocs\wordpress\wp-admin\includes\plugin.php:1312
+Stack trace:
+#0 E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\membership-ordering-system.php(152): add_menu_page('\xE4\xBC\x9A\xE5\x93\xA1\xE5\x88\xB6\xE7\x99\xBA\xE6\xB3\xA8...')
+#1 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(303): membershipOrderingSystemPlug->PluginMenu('')
+#2 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#3 E:\xampp\htdocs\wordpress\wp-includes\plugin.php(470): WP_Hook->do_action(Array)
+#4 E:\xampp\htdocs\wordpress\wp-admin\includes\menu.php(155): do_action('admin_menu', '')
+#5 E:\xampp\htdocs\wordpress\wp-admin\menu.php(341): require_once('E:\\xampp\\htdocs...')
+#6 E:\xampp\htdocs\wordpress\wp-admin\admin.php(158): in E:\xampp\htdocs\wordpress\wp-admin\includes\plugin.php on line 1312
+

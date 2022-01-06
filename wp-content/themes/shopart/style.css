@@ -1,0 +1,155 @@
+/*
+Theme Name:   Shopart
+Description:  The Shopper Store is a child theme of the theme Fastest Shop. It comes with modern technology. It can help you to run clothing shops, cosmetics shops etc. The Shopper Store has several shop front layouts, product filters, easy product columns, etc. This child theme inherits some features from its parent theme. On the Parent theme's blog page, the blogs come in list style. But on the child theme's blog page, you can see blogs in grid view.It is an SEO optimized theme that can help you to rank your website high on Google. The header section of Shopper Store is different from the fastest shop. It comes with a black and white combination which looks incredible. You will find a feature in the header section that can take you to the "Parent Page." You can customize colours and sizes from its "style.css" page. This theme is compatible with WooCommerce and Elementor Page Builder. It also supports Brizy, Visual Composer, Divi, SiteOrigin, Beaver Builder etc and modern page builders.
+Author:       aThemeArt
+Author URL:   https://athemeart.com/
+Template:     fastest-shop
+
+License:      GNU General Public License v3
+License URI:  https://www.gnu.org/licenses/gpl-3.0.en.html
+Text Domain:  shopper-store
+
+Version:      1.0.3
+Requires at least: 5.0
+Tested up to: 5.7.2
+Requires PHP: 7.0
+Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, sticky-post, custom-background, custom-header, custom-colors, custom-menu, featured-images, full-width-template, translation-ready, theme-options, threaded-comments, custom-logo, blog, e-commerce
+
+Shopart WordPress Theme, Copyright 2021 aThemeArt
+Shopart is distributed under the terms of the GNU GPL
+
+Shopart is child theme of Fastest Shop WordPress Theme, Copyright 2020 aThemeArt
+
+*/
+
+
+/* Write here your own personal stylesheet */
+:root {
+    --nav-color: #ffffff;
+    --nav-color-h: #ee2852;
+    --nav-bg-h: #fff;
+    --nav-sub-color: #707070;
+    --nav-sub-color-h: #fff;
+    --nav-sub-bg-h: #ee2852;
+    --nav-wrap-bg: #f7f7f7;
+    --primary-color: #6c757d;
+    --secondary-color: #000;
+    --tertiary-color: #ee2852;
+    --quaternary-color: #fff;
+}
+
+#nav-bar-style {
+    background: #ee2852;
+}
+#masthead.site-header.header-4 #navbar > ul > li > a > i{
+  margin-right: 5px;
+}
+#masthead.site-header.header-4 #navbar.topbar-disable .nav_tooltips{
+	bottom:105%;
+	top:auto;	
+}
+#masthead.site-header.header-4 ul.header-icon > li > a:hover,
+#masthead.site-header.header-4 ul.header-icon > li > a:focus,
+#masthead.site-header.header-4 ul.header-icon > li > a.active{
+	color:#000;
+}
+#masthead.site-header.header-4 .branding-wrap::before{
+	display: none;
+}
+#masthead.site-header.header-4 .branding-wrap{
+	padding:10px 0px;
+}
+#masthead.site-header.header-4 ul.header-icon > li{
+	margin-left: 3px;
+	margin-right: 3px;
+}
+#masthead.site-header.header-4{
+	border-bottom: none;
+}
+#masthead.site-header.header-4 #navbar > ul > li > a{
+	line-height: 55px;
+}
+#masthead.site-header.header-4 .branding-wrap{
+	width: auto;
+}
+#masthead.site-header.header-4 #navbar li{
+	float:left;	
+}
+#masthead.site-header.header-4 #navbar li li{
+	float:none;
+	display:block;
+}
+#nav-bar-style #navbar ul{
+	float: left;
+}
+@media only screen and (max-width : 900px) {
+	#masthead.site-header.header-3 #navbar ul, #nav-bar-style #navbar ul{
+		float: none;
+	}
+	#nav-bar-style{
+		background:none!important;
+		border:none!important;
+		padding-bottom:15px!important;
+	}
+}
+ #navbar > ul > li.current-menu-item > a,
+ #masthead.site-header.header-4 ul.header-icon li li > a:hover,
+#masthead.site-header.header-4 ul.header-icon li li > a:focus,
+#masthead.site-header.header-4 ul.header-icon li li > a.active{
+    color: var( --nav-color-h );
+    background: var( --nav-bg-h );
+}
+#masthead.site-header.header-4 .branding-wrap{
+	padding:25px 0px;	
+}
+
+#commentform textarea{
+	margin-top:20px;	
+}
+
+@media only screen and (max-width : 900px) {
+	#masthead ul.header-icon > li > a{
+		color:#000;
+	}
+	#masthead.site-header.header-4 .branding-wrap {
+		padding: 25px 0px;
+		margin-bottom: 10px;
+	}
+	#masthead.site-header.header-4 #navbar li {
+		float: left;
+		width: 100%;
+	}
+	#masthead.site-header.header-4 #navbar > ul > li > a {
+		line-height:26px;
+		color:#000;
+	}
+	.fly-search-bar .container-wrap{
+		max-width:100%;
+		padding-left:10px;	
+	}
+	.fly-search-bar .container-wrap .search-close-trigger {
+		top:-35px;
+		right:0px;	
+	}
+}
+
+.fastest-shop-blogwrap .post-meta-wrap,
+.fastest-shop-blogwrap .post-meta-wrap ul{
+	position:static;
+	padding:0px 0px 0px 0px;text-align:left;
+	background:none;
+	border-radius:0px;
+	box-shadow:none;
+		
+}
+.fastest-shop-blogwrap .post-meta-wrap ul{
+	margin-left:-10px;
+}
+.fastest-shop-blogwrap .post-meta-wrap li{
+	float:left;	
+}
+nav.navigation.posts-navigation {
+    clear: both;
+    display: block;
+    width: 100%;
+}

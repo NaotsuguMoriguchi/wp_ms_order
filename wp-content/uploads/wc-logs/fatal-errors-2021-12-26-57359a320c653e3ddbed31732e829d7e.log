@@ -1,0 +1,30 @@
+2021-12-26T18:28:59+00:00 CRITICAL Uncaught Error: Call to a member function get_results() on null in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop.php:2
+Stack trace:
+#0 E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\membership-ordering-system.php(111): include()
+#1 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(303): membershipOrderingSystemPlug->RenderSubPage('')
+#2 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(327): WP_Hook->apply_filters('', Array)
+#3 E:\xampp\htdocs\wordpress\wp-includes\plugin.php(470): WP_Hook->do_action(Array)
+#4 E:\xampp\htdocs\wordpress\wp-admin\admin.php(259): do_action('%e4%bc%9a%e5%93...')
+#5 {main}
+  thrown in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop.php on line 2
+
+2021-12-26T18:29:08+00:00 CRITICAL Uncaught Error: Call to a member function get_results() on null in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop.php:2
+Stack trace:
+#0 E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\membership-ordering-system.php(111): include()
+#1 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(303): membershipOrderingSystemPlug->RenderSubPage('')
+#2 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(327): WP_Hook->apply_filters('', Array)
+#3 E:\xampp\htdocs\wordpress\wp-includes\plugin.php(470): WP_Hook->do_action(Array)
+#4 E:\xampp\htdocs\wordpress\wp-admin\admin.php(259): do_action('%e4%bc%9a%e5%93...')
+#5 {main}
+  thrown in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop.php on line 2
+
+2021-12-26T18:32:17+00:00 CRITICAL Uncaught Error: Cannot use object of type stdClass as array in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop.php:33
+Stack trace:
+#0 E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\membership-ordering-system.php(111): include()
+#1 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(303): membershipOrderingSystemPlug->RenderSubPage('')
+#2 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(327): WP_Hook->apply_filters('', Array)
+#3 E:\xampp\htdocs\wordpress\wp-includes\plugin.php(470): WP_Hook->do_action(Array)
+#4 E:\xampp\htdocs\wordpress\wp-admin\admin.php(259): do_action('%e4%bc%9a%e5%93...')
+#5 {main}
+  thrown in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop.php on line 33
+

@@ -1,0 +1,19 @@
+2021-12-27T12:25:16+00:00 CRITICAL syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php on line 7
+
+2021-12-27T12:25:49+00:00 CRITICAL Uncaught Error: Call to undefined function public_path() in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php:8
+Stack trace:
+#0 E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php(28): imgUpload('data:image/png;...')
+#1 E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\membership-ordering-system.php(111): include('E:\\xampp\\htdocs...')
+#2 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(303): membershipOrderingSystemPlug->RenderSubPage('')
+#3 E:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(327): WP_Hook->apply_filters('', Array)
+#4 E:\xampp\htdocs\wordpress\wp-includes\plugin.php(470): WP_Hook->do_action(Array)
+#5 E:\xampp\htdocs\wordpress\wp-admin\admin.php(259): do_action('%e4%bc%9a%e5%93...')
+#6 {main}
+  thrown in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php on line 8
+
+2021-12-27T13:09:13+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php on line 48
+
+2021-12-27T13:53:43+00:00 CRITICAL syntax error, unexpected '}', expecting ',' or ';' in E:\xampp\htdocs\wordpress\wp-content\plugins\membership-ordering-system\ms-ordering-shop-add.php on line 64
+
+2021-12-27T23:40:42+00:00 CRITICAL Maximum execution time of 120 seconds exceeded in E:\xampp\htdocs\wordpress\wp-includes\Requests\Transport\cURL.php on line 484
+
