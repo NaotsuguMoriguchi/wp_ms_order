@@ -277,7 +277,7 @@ if($num_of_pages > 1){
             else
                 foreach($posts as $post){
                     $idx++;
-                    echo '<tr data-id="'.$post->history_id.'" class="h_item iedit author-self level-0 post-83 type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
+                    echo '<tr data-id="'.$post->history_id.'" data-state="'.$post->state.'" class="h_item iedit author-self level-0 post-83 type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
                     echo '<td class="product_tag column-product_tag d-none2">'.$idx.'</td>';
                     echo '<td class="product_tag column-product_tag d-none2">'.$post->invoice_date.'</td>';
                     echo '<td class="product_tag column-product_tag">'.$post->invoice_num.'</td>';
@@ -364,8 +364,8 @@ if($num_of_pages > 1){
             </div>
             <div class="modal-body mx-1">
                 <div class="row h-100">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <table  class="wp-list-table widefat fixed striped table-view-list posts" style="margin-top:10px;width: 97%;">
+                    <div class="col-12 align-items-center justify-content-center">
+                        <table  class="wp-list-table widefat fixed striped table-view-list posts w-100" style="margin-top:10px;">
                             <thead>
                                 <tr>
                                     <th scope="col" class="manage-column column-is_in_stock d-none2">No</th>
@@ -398,6 +398,9 @@ if($num_of_pages > 1){
                                 </tr>
                             </tfoot>
                         </table>
+                        <div class="text-right mt-2">
+                            <input type="button" id="agree_btn" data-id="" onclick="agree()" class="button" value="確定" style="margin-bottom: 0px">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -411,51 +414,31 @@ if($num_of_pages > 1){
 <script>
 var myModal = null;
     jQuery( function() {
-
-        // jQuery( "#client" ).autocomplete({
-        //   source: function( request, response ) {
-        //     jQuery.ajax( {
-        //       url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
-        //       dataType: "json",
-        //       data: {
-        //         search: request.term,
-        //         shop:'',
-        //         ajax:'ajax',
-        //         to:'clients'
-        //       },
-        //       success: function( data ) {
-        //         response( data );
-        //       }
-        //     } );
-        //   },
-        //   minLength: 1,
-        //   select: function( event, ui ) {
-        //     jQuery(this).attr('data-id', ui.item.id);
-        //     jQuery("#address").val(ui.item.address);
-        //     jQuery('#address').attr('title', ui.item.address);
-        //     // get_products(ui.item.shop);
-        //     // get_products('');
-        //     // console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-        //   }
-        // } );
-
+        jQuery("body").on("click", "#agree_btn", function(e) {
+            var invoice = jQuery(this).data('id');
+            if(invoice == '')
+                return;
+            jQuery.ajax( {
+              url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+              type: "get",
+              data: {
+                invoice:invoice,
+                to:'confirm'
+              },
+              success: function( data ) {
+                location.href = "admin.php?page=ms-ordering-sys";
+              }
+            } );
+        });
         jQuery("body").on("click", "#search-submit", function (e) {
             location.href = "admin.php?page=ms-ordering-sys&p="+jQuery('#product_list').val()+"&c="+jQuery('#client').val()+"&d1="+jQuery('#invoice_date').val()+"&d2="+jQuery('#invoice_date1').val();
         });
 
-        // jQuery("body").on("keypress", "#product_list", function (e) {
-            
-        // });
-        // jQuery("body").on("keypress", "#client", function (e) {
-           
-        // });
         jQuery("body").on("click", "#modal_table_2 .btn-close", function (e) {
             myModal.hide();
             myModal = null;
         });
-        // jQuery("body").on("change", "#invoice_date, #invoice_date1", function (e) {
-            
-        // });
+
         jQuery("body").on("keypress", ".current-page", function(e) {
             if(e.keyCode == 13){
                 location.href = "admin.php?page=ms-ordering-sys&paged="+jQuery(this).val()+"&p="+jQuery('#product_list').val()+"&c="+jQuery('#client').val()+"&d1="+jQuery('#invoice_date').val()+"&d2="+jQuery('#invoice_date1').val();
@@ -464,6 +447,7 @@ var myModal = null;
         jQuery("body").on("click", ".h_item", function(e) {
             jQuery('.details_list_body').html('');
             var id = jQuery(this).data('id');
+            var state = jQuery(this).data('state');
             jQuery.ajax({
                 url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
                 type: "post",
@@ -502,6 +486,13 @@ var myModal = null;
                     }
                     jQuery('.details_list_body').append(s);
                     myModal.show();
+                    if(state != '完了'){
+                        jQuery('#agree_btn').attr('data-id', id);
+                        jQuery('#agree_btn').prop('disabled', false);
+                    }else{
+                        jQuery('#agree_btn').attr('data-id', '');
+                        jQuery('#agree_btn').prop('disabled', true);
+                    }
                 },
                 error: function (data, textStatus, errorThrown) {
                     console.log(data);
@@ -538,5 +529,8 @@ function get_products(shop){
             console.log(data);
         },
     });
+}
+function agree(){
+
 }
 </script>

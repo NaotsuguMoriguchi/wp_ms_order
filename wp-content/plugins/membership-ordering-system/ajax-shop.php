@@ -342,8 +342,8 @@ if(isset($_REQUEST['to']) && $_REQUEST['to'] == "save_product"){
 	$headers = array('Content-Type: text/html; charset=UTF-8');
 	$headers[] = 'From: '.$_shop->shop_name.' <'.$_shop->mail.'>';
 	//$headers[] = 'Cc: John Q Codex <jqc@wordpress.org>';
-	// echo $content;
-    wp_mail($client_mail, $subject, $content, $headers);
+	echo $content;
+    // wp_mail($client_mail, $subject, $content, $headers);
 	//echo "Ok";
 
 	echo 'ok';

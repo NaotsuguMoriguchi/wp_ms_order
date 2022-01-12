@@ -9,7 +9,8 @@
        padding-right: 5px;
     }
     table tbody tr td{
-        word-break: break-word;
+        word-break: break-word!important;
+        word-wrap: break-word!important;
     }
     .no_items1{
         display: table-row;
@@ -105,42 +106,18 @@
         <div>サロン名</div>        
         <div>
             <input type="text" name="client" id="client" data-id="" list="client_list"  style="width:170px" onchange="">
-            <!-- <datalist id="client_list">  -->
-                <?php
-                    // foreach($clients as $client){
-                ?>
-                        <!-- <option
-                            data-id="<?php echo $client->id ?>"
-                            data-shop="<?php echo $client->shop ?>" 
-                            data-address="<?php if(!empty($client->shipping_info))echo $client->shipping_info;else echo $client->address ?>" 
-                            value="<?php echo $client->name ?>"><?php echo $client->name ?></option> -->
-                <?php
-                    // }
-                ?>
-            <!-- </datalist> -->
-            <!-- <select id="shop" name="shop" style="width: 150px; min-height: 34px" onchange="sel_client()"> -->
-                <!-- <option value="">代理店を選択</option> -->
-            
-            <!-- </select> -->
         </div>
     </div>
     <div style="margin-right:5px">
         <div>配送先住所</div>
         <div>
             <input type="text" name="address" id="address" readonly style="width:345px" onchange="">
-            <!-- <datalist id="client_list"> 
-            </datalist> -->
         </div>
     </div>
     <div style="margin-right:5px">
         <div>商品名</div>
         <div>
-            <!-- <input type="text" name="product_list" list="product_list" data-id=""  style="width:170px"> -->
-            <!-- <datalist id="product_list">
-             
-            </datalist> -->
             <select name="product_list" id="product_list" style="width:170px"></select>
-            <!-- <input type="hidden" name="sel_product_id" id="sel_product_id"> -->
         </div>
     </div>
     <div style="margin-right:5px; display: flex;">
@@ -306,8 +283,8 @@
             },
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
-                if(jQuery.trim(data) == 'ok')
-                    location.href = "";
+                // if(jQuery.trim(data) == 'ok')
+                //     location.href = "";
             },
             error: function (data, textStatus, errorThrown) {
                 console.log(data);

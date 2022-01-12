@@ -139,15 +139,7 @@ class membershipOrderingSystemPlug
     public function PluginMenu()  
     {  
         
-        // $menu_slug = 'ms-ordering-sys';
-        
-        // $this->my_plugin_screen_name = add_menu_page('会員制発注SYS', 
-        //                                             'ご発注フォーム', 
-        //                                             'manage_options', 
-        //                                             $menu_slug, 
-        //                                             array($this, 'RenderPage'), 
-        //                                             'dashicons-welcome-widgets-menus');
-        $menu_slug = 'ms-ordering-invoice-add';
+        $menu_slug = 'ms-ordering-sys';
         
         $this->my_plugin_screen_name = add_menu_page('会員制発注SYS', 
                                                     '会員制発注SYS', 
@@ -155,7 +147,15 @@ class membershipOrderingSystemPlug
                                                     $menu_slug, 
                                                     array($this, 'RenderPage'), 
                                                     'dashicons-welcome-widgets-menus');
-        add_submenu_page( $menu_slug, 'ご発注フォーム', 'ご発注フォーム', 'manage_options', $menu_slug, array($this, 'RenderPage') );
+        // $menu_slug = 'ms-ordering-invoice-add';
+        
+        // $this->my_plugin_screen_name = add_menu_page('会員制発注SYS', 
+        //                                             '会員制発注SYS', 
+        //                                             'manage_options', 
+        //                                             $menu_slug, 
+        //                                             array($this, 'RenderPage'), 
+        //                                             'dashicons-welcome-widgets-menus');
+        add_submenu_page( $menu_slug, '発注履歴', '発注履歴', 'manage_options', $menu_slug, array($this, 'RenderPage') );
         
         $menu_slug_shop = 'ms-ordering-shop';
         add_submenu_page( $menu_slug, '代理店リスト', '代理店リスト', 'manage_options', $menu_slug_shop, array($this, 'RenderSubPage') );
@@ -175,8 +175,8 @@ class membershipOrderingSystemPlug
         $menu_slug_client = 'ms-ordering-products-add';
         add_submenu_page( $menu_slug, '商品新規登録', '商品新規登録', 'manage_options', $menu_slug_client, array($this, 'RenderSubPage'));
 
-        $menu_slug_client = 'ms-ordering-sys';
-        add_submenu_page( $menu_slug, '発注履歴', '発注履歴', 'manage_options', $menu_slug_client, array($this, 'RenderSubPage'));
+        // $menu_slug_client = 'ms-ordering-sys';
+        // add_submenu_page( $menu_slug, '発注履歴', '発注履歴', 'manage_options', $menu_slug_client, array($this, 'RenderSubPage'));
         
 
 
@@ -214,13 +214,13 @@ class membershipOrderingSystemPlug
         );
     }
     public function custom_callback_function() {
-        if (is_page('sample-page')) {
+        if (is_page('corporation_order')) {
 		
-            if(!empty($_REQUEST['invoice'])){
+            // if(!empty($_REQUEST['invoice'])){/kinujo.jp/corporation_order/
 
                 include "ms-invoice-email.php";
 
-            }
+            // }
             
         }
         
