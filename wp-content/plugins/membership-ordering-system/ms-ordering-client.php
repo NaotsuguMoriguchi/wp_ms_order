@@ -1,12 +1,12 @@
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/agency.css" rel="stylesheet">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/agency.css" rel="stylesheet">
 <?php
 global $wpdb; 
 $del = isset( $_POST['del'] ) ? absint( $_POST['del'] ) : 0;
 if($del != 0){
 	$ids = $_POST['post'];
 	$ids_str = implode(',', $ids);
-	$wpdb->query($wpdb->prepare("DELETE FROM wp_ms_client WHERE id in (".$ids_str.")"));
+	$wpdb->query("DELETE FROM wp_ms_client WHERE id in (".$ids_str.")");
 }
 
 $paged = isset( $_GET['paged'] ) ? absint( $_GET['paged'] ) : 1;
@@ -28,15 +28,18 @@ if($paged > $num_of_pages)
 $offset = ( $paged - 1 ) * $limit;
 
 if($s != 0){
-	$posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_client where shop_id  = '%d' and address like %s order by `time` desc LIMIT %d, %d", array($s, $like, $offset, $limit)));
+	$posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_client where shop_id  = '%d' and address like %s order by client_code, `time` desc LIMIT %d, %d", array($s, $like, $offset, $limit)));
 }else
-	$posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_client where address like %s order by `time` desc LIMIT %d, %d", array($like, $offset, $limit)));
+	$posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_client where address like %s order by client_code, `time` desc LIMIT %d, %d", array($like, $offset, $limit)));
 
 
 
 $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 ?>
 <style type="text/css">	
+	input[type=search], select{
+        height: 35px !important;
+    }
     [type="number"]::-webkit-inner-spin-button,
     [type="number"]::-webkit-outer-spin-button {
        display:none;
@@ -47,14 +50,17 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
     .check-column{
     	width: 5%;
     }
-    .column-name{
+    .column-client_code{
+    	width: 10%;
+    }
+    .column-client-name{
     	width: 10%;
     }
     .column-shop{
     	width: 13%;
     }
     .column-address{
-    	width: 25%;
+    	width: 20%;
     }
     .column-tel{
     	width: 12%;
@@ -63,13 +69,13 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
     	width: 15%;
     }
     .column-shipping_info{
-    	width: 20%;
+    	width: 15%;
     }
     @media screen and (max-width: 1100px){
         .d-none1{
-            display: none;
+            display: none !important;
         }
-        .column-name{
+        .column-client-name{
 	    	width: 18%;
 	    }
 	    .column-address{
@@ -78,9 +84,9 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
     }
     @media screen and (max-width: 768px){
         .d-none2{
-            display: none;
+            display: none !important;
         }
-        .column-name{
+        .column-client-name{
 	    	width: 40%;
 	    }
 	    .column-mail{
@@ -97,7 +103,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 <div class="wrap" style="position: relative;">
 	<h1 class="wp-heading-inline">客先一覧</h1>	
 	<a href="admin.php?page=ms-ordering-client-add" class="upload-view-toggle page-title-action" role="button" aria-expanded="false"><span class="upload">客先新規登録</span></a>
-	<div style="float: right;display: flex;margin-top: 9px">
+	<div class="mb-2" style="float: right;display: flex;margin-top: 9px">
 		<select id="shop" name="shop" style="margin-right: 0.5rem">
 	        <option value="">代理店を選択</option>
 	    <?php
@@ -183,7 +189,8 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 		    <thead>
 		        <tr>
 		            <td id="cb" class="manage-column column-cb check-column"><input id="cb-select-all-1" type="checkbox"></td>
-		            <th scope="col" class="manage-column column-name">サロン名</th>
+		            <th scope="col" class="manage-column column-client_code d-none2">サロンコード</th>
+		            <th scope="col" class="manage-column column-client-name">サロン名</th>
 		            <th scope="col" class="manage-column column-shop d-none1">取扱代理店</th>
 		            <th scope="col" class="manage-column column-address d-none2">住所</th>
 		            <th scope="col" class="manage-column column-tel d-none2">電話番号</th>
@@ -195,23 +202,24 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 		    	<?php        
 			        $idx = 0;
 			        if(!$posts || count($posts) < 1)
-		                echo '<tr class="no-item"><td class="colspanchange" colspan="7">...</td></tr>';
+		                echo '<tr class="no-item"><td class="colspanchange" colspan="8">...</td></tr>';
 		           	else
 				        foreach($posts as $post){
 				        	$idx++; 
 				        	echo '<tr data-id="'.$post->id.'" class="h_item iedit author-self level-0 post-'.$post->id.' type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
 			                // echo '<td class="product_tag column-product_tag d-none1">'.$idx.'</td>';
-			                echo '<th scope="row" class="check-column"><input class="shop_select" type="checkbox" name="post[]" value="'.$post->id.'"></th>';
-			                echo '<td class="product_tag column-product_tag">';
+			                echo '<th scope="row" class="check-column" style="display: table-cell;"><input class="shop_select" type="checkbox" name="post[]" value="'.$post->id.'"></th>';
+			                echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->client_code.'</td>';
+			                echo '<td class="product_tag column-product_tag" style="display: table-cell;">';
 			                echo '<strong><a href="admin.php?page=ms-ordering-client-add&i='.$post->id.'">'.$post->name.'</a><strong>';
 			                echo '</td>';
-			                echo '<td class="product_tag column-product_tag d-none1">'.$post->shop.'</td>';
-			                echo '<td class="product_tag column-product_tag d-none2">'.$post->client_pref.'&nbsp;&nbsp;'.$post->client_city.'&nbsp;&nbsp;'.$post->address.'</td>';
-			                echo '<td class="product_tag column-product_tag d-none2">'.$post->tel.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none1" style="display: table-cell;">'.$post->shop.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->client_pref.'&nbsp;&nbsp;'.$post->client_city.'&nbsp;&nbsp;'.$post->address.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->tel.'</td>';
 			                echo '<td class="product_tag column-product_tag">';
 			                echo '<a href="mailto:'.$post->mail.'">'.$post->mail.'</a>';
 			                echo '</td>';
-			                echo '<td class="product_tag column-product_tag d-none2">'.$post->shipping_info.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->shipping_info.'</td>';
 			                echo '</tr>';
 				        }
 		        ?>
@@ -219,6 +227,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 		    <tfoot>
 		        <tr>
 		            <td id="cb" class="manage-column column-cb check-column"><input id="cb-select-all-1" type="checkbox"></td>
+		            <th scope="col" class="manage-column column-is_in_stock d-none2">サロンコード</th>
 		            <th scope="col" class="manage-column column-is_in_stock">サロン名</th>
 		            <th scope="col" class="manage-column column-is_in_stock d-none1">取扱代理店</th>
 		            <th scope="col" class="manage-column column-is_in_stock d-none2">住所</th>

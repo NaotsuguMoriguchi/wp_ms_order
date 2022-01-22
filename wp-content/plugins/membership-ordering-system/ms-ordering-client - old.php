@@ -1,5 +1,5 @@
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/agency.css" rel="stylesheet">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>/assets/css/agency.css" rel="stylesheet">
 <?php
 global $wpdb; 
 if(isset($_REQUEST['ajax']) && $_REQUEST['ajax'] == 'ajax'){
@@ -62,7 +62,7 @@ $posts = $wpdb->get_results("SELECT * FROM wp_ms_client order by `time` desc lim
 	            <div class="result_m_item col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-1 p-2" data-id="<?=$post->id?>">
 	                <div class="agency_item">
 	                    <div class="mb-2 item_img_div">
-	                        <img src="../wp-content/plugins/membership-ordering-system/assets/client/<?=$post->img?>">
+	                        <img src="<?php echo plugin_dir_url( __FILE__) ?>/assets/client/<?=$post->img?>">
 	                        <!-- <button type="button" aria-label="View Theme Details for Avril" data-idx="<?php echo $idx ?>" class="more-details" id="avril-action">代理店詳細</button> -->
 	                    </div>
 	                    <div class="col-12 item p-2">
@@ -165,7 +165,7 @@ $posts = $wpdb->get_results("SELECT * FROM wp_ms_client order by `time` desc lim
     				var search = jQuery("#search_shop").val();
 					var shop = jQuery("#shop").val();
     				jQuery.ajax({
-						url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+						url: "<?php echo plugin_dir_url( __FILE__) ?>/ajax-shop.php",
 						type: "post",
 						data: {
 							row:row,
@@ -204,7 +204,7 @@ $posts = $wpdb->get_results("SELECT * FROM wp_ms_client order by `time` desc lim
 				return;
 			jQuery('#row').val(0);
 			jQuery.ajax({
-				url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+				url: "<?php echo plugin_dir_url( __FILE__) ?>/ajax-shop.php",
 				type: "post",
 				data: {
 					row:0,
@@ -234,7 +234,7 @@ $posts = $wpdb->get_results("SELECT * FROM wp_ms_client order by `time` desc lim
 			var shop = jQuery("#shop").val();
 			jQuery('#row').val(0);
 			jQuery.ajax({
-				url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+				url: "<?php echo plugin_dir_url( __FILE__) ?>/ajax-shop.php",
 				type: "post",
 				data: {
 					row:0,
@@ -264,7 +264,7 @@ $posts = $wpdb->get_results("SELECT * FROM wp_ms_client order by `time` desc lim
 		for(var i=0;i<data.length;i++){	
 			var result=  '';
 			result += '<div class="result_m_item col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-1 p-2" data-id="'+data[i].id+'"><div class="agency_item"><div class="mb-2 item_img_div">';
-	        result += '<img src="../wp-content/plugins/membership-ordering-system/assets/client/'+data[i].img+'">';
+	        result += '<img src="'.plugin_dir_url( __FILE__).'/assets/client/'+data[i].img+'">';
 	        result += '</div>';
 	        result += '<div class="col-12 item p-2">';
 	        result += '<div class="item-content">';
@@ -287,7 +287,7 @@ $posts = $wpdb->get_results("SELECT * FROM wp_ms_client order by `time` desc lim
 		for(var i=0;i<data.length;i++){	
 			var result=  '';
 			result += '<div class="result_m_item col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-1 p-2" data-id="'+data[i].id+'"><div class="agency_item"><div class="mb-2 item_img_div">';
-	        result += '<img src="../wp-content/plugins/membership-ordering-system/assets/client/'+data[i].img+'">';
+	        result += '<img src="'.echo plugin_dir_url( __FILE__).'/assets/client/'+data[i].img+'">';
 	        result += '</div>';
 	        result += '<div class="col-12 item p-2">';
 	        result += '<div class="item-content">';

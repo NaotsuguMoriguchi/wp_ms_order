@@ -1,0 +1,122 @@
+.carbon-field {
+    padding: 10px 12px 16px;
+    margin: 0;
+}
+.carbon-association .association-left, .carbon-association .association-right, .carbon-association .search-field, .carbon-complex .fields-container, .carbon-field, .carbon-file .carbon-attachment-file-name {
+    box-sizing: border-box;
+}
+.carbon-table-row>td {
+    padding: 0;
+}
+.carbon-fields-collection {
+    padding-bottom: 20px;
+}
+.carbon-user-container {
+    max-width: 800px;
+}
+@media screen and (min-width: 783px){
+	.carbon-table-row .carbon-container>.carbon-field>label, .carbon-table-row .carbon-container>.carbon-fields-row>.carbon-field>label {
+	    position: absolute;
+	    left: 0;
+	}
+}
+@media screen and (max-width: 782px){
+	.carbon-user-container label {
+	    width: auto;
+	}
+}
+.carbon-field label {
+    padding: 0 0 8px;
+    font-weight: 600;
+}
+.carbon-field label {
+    padding: 0 0 8px;
+    font-weight: 600;
+}
+.carbon-user-container label {
+    width: 200px;
+}
+.carbon-container label {
+    display: block;
+    padding: 2px 0;
+    color: #24282d;
+}
+.carbon-attachment {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    line-height: 128px;
+    border: 1px dashed #ccc;
+    text-align: center;
+}
+.carbon-attachment .carbon-description {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+}
+.carbon-attachment .button {
+    position: relative;
+    z-index: 10;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin: 0;
+    visibility: hidden;
+    opacity: 0;
+    white-space: normal;
+    line-height: 1.5;
+    transition: visibility .2s ease-out,opacity .2s ease-out;
+}
+.carbon-attachment .carbon-file-remove:hover {
+    opacity: .8
+}
+
+.carbon-attachment .carbon-file-remove:before {
+    background: #24282d;
+    color: #fff;
+    border-radius: 50%
+}
+.carbon-attachment .carbon-description.hidden+.button,.carbon-attachment:hover .button {
+    visibility: visible;
+    opacity: 1
+}
+
+.carbon-attachment input.carbon-attachment-file-name {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    bottom: 0;
+    padding: 5px;
+    background: #fafafa;
+    border: 1px solid #ccc;
+    color: #24282d;
+    font-size: 13px;
+    box-shadow: none;
+    margin: 0
+}
+.carbon-attachment .carbon-file-remove {
+    position: absolute;
+    z-index: 15;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    transition: opacity .2s ease-out;
+}
+.carbon-attachment .carbon-attachment-preview:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 10%);
+    overflow: hidden;
+}

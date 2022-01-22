@@ -1,4 +1,4 @@
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
@@ -220,7 +220,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 														echo 'hidden';
 												?>">
 													<input type="hidden" name="photo_base64" id="photo_base64">
-													<img src="<?php echo isset($post) ? "../wp-content/plugins/membership-ordering-system/assets/client/".$post->img : '' ?>" class="thumbnail-image" id="photo">												
+													<img src="<?php echo isset($post) ? plugin_dir_url( __FILE__)."/assets/client/".$post->img : '' ?>" class="thumbnail-image" id="photo">												
 													<div class="carbon-file-remove dashicons-before dashicons-no-alt"></div>
 												</div>
 											</div>

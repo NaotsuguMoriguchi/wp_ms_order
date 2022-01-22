@@ -1,4 +1,4 @@
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
@@ -67,13 +67,15 @@ if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && $_REQUEST['action'] == '
 }
 if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && $_REQUEST['action'] == 'delete'){
     // $result = $wpdb->delete($table, );
-    $result = $wpdb->query($wpdb->prepare("delete from ".$table." where id = %d", $_REQUEST['id']));
+    $s_id = isset($_REQUEST['id']) ? $_REQUEST['id'] : ''; 
+    $result = $wpdb->query($wpdb->prepare("delete from ".$table." where id = %d", $s_id));
     // var_export($result);
     if($result)
         echo '<script type="text/javascript">location.href="admin.php?page=ms-ordering-shop"</script>';
 }
 if(isset($_REQUEST['i']) && !empty($_REQUEST['i'])){
-    $posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_shop where id = %d", $_REQUEST['i']));
+    $s_id = isset($_REQUEST['i']) ? $_REQUEST['i'] : ''; 
+    $posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_shop where id = %d", $s_id));
     $post =$posts[0];
 }
 ?>
@@ -247,9 +249,9 @@ if(isset($_REQUEST['i']) && !empty($_REQUEST['i'])){
 		</p>
 	</form>
 </div>
-<script src="../wp-content/plugins/membership-ordering-system/assets/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo plugin_dir_url( __FILE__) ?>assets/js/bootstrap.bundle.min.js"></script>
 <!-- <script src="../wp-content/plugins/membership-ordering-system/assets/js/jquery.easing.min.js"></script> -->
-<script src="../wp-content/plugins/membership-ordering-system/assets/js/sb-admin-2.min.js"></script>
+<script src="<?php echo plugin_dir_url( __FILE__) ?>assets/js/sb-admin-2.min.js"></script>
 <!-- <script src="../wp-content/plugins/membership-ordering-system/assets/js/jquery.autosize.min.js"></script> -->
 <script type="text/javascript">
 	var $modal = jQuery('#modal');
@@ -262,7 +264,7 @@ if(isset($_REQUEST['i']) && !empty($_REQUEST['i'])){
     jQuery( function() {
       
         jQuery.ajax( {
-            url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+            url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
             type: "get",
             data: {                
                 shop:'',
@@ -288,7 +290,7 @@ if(isset($_REQUEST['i']) && !empty($_REQUEST['i'])){
     function selpref(){
         //alert(jQuery('#shop_pref').val());
         jQuery.ajax( {
-            url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+            url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
             type: "get",
             data: {
                 pref:jQuery('#shop_pref').val(),                 

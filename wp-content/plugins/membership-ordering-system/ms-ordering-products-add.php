@@ -1,4 +1,4 @@
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
@@ -26,7 +26,8 @@ function imgUpload($img){
     return $imageName1;
 }
 global $wpdb;
-$_shop = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_shop where id = %d", $_REQUEST['shop']));
+$shop_id = isset($_REQUEST['shop']) ? $_REQUEST['shop'] : '';
+$_shop = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_shop where id = %d", $shop_id));
 $shop_item =$_shop[0];
 // var_export($shop_item);
 $post = null;
@@ -76,16 +77,21 @@ if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && $_REQUEST['action'] == '
 }
 if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && $_REQUEST['action'] == 'delete'){
     // $result = $wpdb->delete($table, );
-    $result = $wpdb->query($wpdb->prepare("delete from ".$table." where id = %d", $_REQUEST['id']));
+    $p_id = isset($_REQUEST['id']) ? $_REQUEST['id'] : ''; 
+    $result = $wpdb->query($wpdb->prepare("delete from ".$table." where id = %d", $p_id));
     // var_export($result);
     if($result)
         echo '<script type="text/javascript">location.href="admin.php?page=ms-ordering-products"</script>';
 }
 $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 ?>
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/product.css" rel="stylesheet">
 <style type="text/css">
     body{
         background-color: #f0f0f1 !important;
+    }
+    select{
+        width: 25em;
     }
     .preview {
         overflow: hidden;
@@ -117,6 +123,9 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
     }
     .carbon-attachment{
         border-width: 2px !important;
+    }
+    #comment{
+        resize: none;
     }
 </style>
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -166,7 +175,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
                 <tr class="form-field form-required">
                     <th scope="row"><label for="user_login">取扱代理店</label></th>
                     <td>
-                        <select id="shop" name="shop" style="width: 25em">
+                        <select id="shop" name="shop">
                             <!-- <option value=""></option> -->
                         <?php
                         foreach($shops as $shop){
@@ -226,7 +235,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
                                                         echo 'hidden';
                                                 ?>">
                                                     <input type="hidden" name="photo_base64" id="photo_base64">
-                                                    <img src="<?php echo isset($post) ? "../wp-content/plugins/membership-ordering-system/assets/product/".$post->img : '' ?>" class="thumbnail-image" id="photo">                                             
+                                                    <img src="<?php echo isset($post) ? plugin_dir_url( __FILE__)."assets/product/".$post->img : '' ?>" class="thumbnail-image" id="photo">                                             
                                                     <div class="carbon-file-remove dashicons-before dashicons-no-alt"></div>
                                                 </div>
                                             </div>
@@ -254,9 +263,9 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
         </p>
     </form>
 </div>
-<script src="../wp-content/plugins/membership-ordering-system/assets/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo plugin_dir_url( __FILE__) ?>assets/js/bootstrap.bundle.min.js"></script>
 <!-- <script src="../wp-content/plugins/membership-ordering-system/assets/js/jquery.easing.min.js"></script> -->
-<script src="../wp-content/plugins/membership-ordering-system/assets/js/sb-admin-2.min.js"></script>
+<script src="<?php echo plugin_dir_url( __FILE__) ?>assets/js/sb-admin-2.min.js"></script>
 <!-- <script src="../wp-content/plugins/membership-ordering-system/assets/js/jquery.autosize.min.js"></script> -->
 <script type="text/javascript">
     var $modal = jQuery('#modal');

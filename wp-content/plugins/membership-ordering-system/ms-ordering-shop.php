@@ -4,7 +4,7 @@ $del = isset( $_POST['del'] ) ? absint( $_POST['del'] ) : 0;
 if($del != 0){
 	$ids = $_POST['post'];
 	$ids_str = implode(',', $ids);
-	$wpdb->query($wpdb->prepare("DELETE FROM wp_ms_shop WHERE id in (".$ids_str.")"));
+	$wpdb->query("DELETE FROM wp_ms_shop WHERE id in (".$ids_str.")");
 }
 
 $paged = isset( $_GET['paged'] ) ? absint( $_GET['paged'] ) : 1;
@@ -57,7 +57,7 @@ if($s != ''){
     .column-address{
     	width: 25%;
     }
-    .column-name{
+    .column-m-name{
     	width: 10%;
     }
     .column-tel{
@@ -71,7 +71,7 @@ if($s != ''){
     }
     @media screen and (max-width: 1100px){
         .d-none1{
-            display: none;
+            display: none !important;
         }
         .column-address{
 	    	width: 35%;
@@ -79,7 +79,7 @@ if($s != ''){
     }
     @media screen and (max-width: 768px){
         .d-none2{
-            display: none;
+            display: none !important;
         }
         .column-shop_name{
 	    	width: 40%;
@@ -110,7 +110,7 @@ if($s != ''){
 		?>
 		<div class="tablenav top">
 			<div class="alignleft actions bulkactions">			
-				<input type="button" id="item_delete" class="button action" value="削除">
+				<input type="button" id="item_delete" class="button action item_delete" value="削除">
 			</div>
 			<div class="tablenav-pages">
 				<span class="displaying-num"><?php echo number_format($total); ?> アイテム<!--  items --></span>
@@ -173,7 +173,7 @@ if($s != ''){
 		            <!-- <th scope="col" class="manage-column column-is_in_stock d-none1" style="width: 5%">No</th> -->
 		            <th scope="col" class="manage-column column-shop_name">代理店名</th>
 		            <th scope="col" class="manage-column column-address d-none2">住所</th>
-		            <th scope="col" class="manage-column column-name d-none1">御担当者名</th>
+		            <th scope="col" class="manage-column column-m-name d-none1">御担当者名</th>
 		            <th scope="col" class="manage-column column-tel d-none2">電話番号</th>
 		            <th scope="col" class="manage-column column-mail">E-mail</th>
 		            <th scope="col" class="manage-column column-invoice_info d-none2">請求書、納品書送付先情報</th>
@@ -188,18 +188,18 @@ if($s != ''){
 				        foreach($posts as $post){
 				        	$idx++; 
 				        	echo '<tr data-id="'.$post->id.'" class="h_item iedit author-self level-0 post-'.$post->id.' type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
-				        	echo '<th scope="row" class="check-column"><input class="shop_select" type="checkbox" name="post[]" value="'.$post->id.'"></th>';
+				        	echo '<th scope="row" class="check-column" style="display: table-cell;"><input class="shop_select" type="checkbox" name="post[]" value="'.$post->id.'"></th>';
 			                // echo '<td class="product_tag column-product_tag d-none1">'.$idx.'</td>';
-			                echo '<td class="product_tag column-product_tag">';
+			                echo '<td class="product_tag column-product_tag" style="display: table-cell;">';
 			                echo '<strong><a href="admin.php?page=ms-ordering-shop-add&i='.$post->id.'">'.$post->shop_name.'</a><strong>';
 			                echo '</td>';
-			                echo '<td class="product_tag column-product_tag d-none2">'.$post->shop_pref.'&nbsp;&nbsp;'.$post->shop_city.'&nbsp;&nbsp;'.$post->shop_address.'</td>';
-			                echo '<td class="product_tag column-product_tag d-none1">'.$post->name.'</td>';
-			                echo '<td class="product_tag column-product_tag d-none2">'.$post->tel.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->shop_pref.'&nbsp;&nbsp;'.$post->shop_city.'&nbsp;&nbsp;'.$post->shop_address.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none1" style="display: table-cell;">'.$post->name.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->tel.'</td>';
 			                echo '<td class="product_tag column-product_tag">';
 			                echo '<a href="mailto:'.$post->mail.'">'.$post->mail.'</a>';
 			                echo '</td>';
-			                echo '<td class="product_tag column-product_tag d-none2">'.$post->invoice_info.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->invoice_info.'</td>';
 			                echo '</tr>';
 				        }
 		        ?>

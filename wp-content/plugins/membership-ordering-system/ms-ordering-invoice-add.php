@@ -1,8 +1,10 @@
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/agency.css" rel="stylesheet">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/agency.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <style>
-    input, select{min-height: 33px}
+    input, select{
+        height: 40px !important;
+    }
     [type="number"]::-webkit-inner-spin-button,
     [type="number"]::-webkit-outer-spin-button {
        /*display:none;*/
@@ -18,9 +20,36 @@
     .no_items2, .no_items3{
         display: none;
     }
-    @media screen and (max-width: 1000px){
+    .column-num{
+        width: 10%;
+    }
+    .column-invoice_date{
+        width: 8%;
+    }
+    .column-client_code{
+        width: 12%;
+    }
+    .column-client{
+        width: 10%;
+    }
+    .column-address{
+        width: 20%;
+    }
+    .column-product_name{
+        width: 10%;
+    }
+    .column-money{ 
+        width: 10%;
+    }
+    .column-counts{
+        width: 10%;
+    }
+    .column-total{
+        width: 10%;
+    }
+    @media screen and (max-width: 1080px){
         .d-none1{
-            display: none;
+            display: none !important;
         }
         .no_items1, .no_items3{
             display: none;
@@ -28,16 +57,43 @@
         .no_items2{
             display: table-row;
         }
+        .column-invoice_date{
+            width: 15%;
+        }
+        .column-client_code{
+            width: 15%;
+        }
+        .column-client{
+            width: 15%;
+        }
+        .column-product_name{
+            width: 25%;
+        }
+        .column-money{ 
+            width: 15%;
+        }
+        .column-counts{
+            width: 15%;
+        }
     }
     @media screen and (max-width: 768px){
         .d-none2{
-            display: none;
+            display: none !important;
         }
         .no_items1, .no_items2{
             display: none;
         }
         .no_items3{
             display: table-row;
+        }
+        .column-client_code{
+            width: 25%;
+        }
+        .column-client{
+            width: 25%;
+        }
+        .column-product_name{
+            width: 50%;
         }
     }
     .ui-autocomplete-loading {
@@ -81,8 +137,9 @@
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <?php
-// global $wpdb; 
-// $clients = $wpdb->get_results("SELECT * FROM wp_ms_client");
+global $wpdb; 
+$invoices = $wpdb->get_results("SELECT max(invoice_num) as invoice_num FROM wp_ms_invoice");
+$invoice_num = 1 + (int)$invoices[0]->invoice_num;
 ?>
 
 <div class="wrap" style="position: relative;">
@@ -96,11 +153,12 @@
 <div style="display:flex; flex-wrap: wrap">
     <div style="margin-right:5px">
         <div>注文日</div>
-        <div><input type="date" id="invoice_date" name="invoice_date" style="width:170px"></div>
+        <div><input type="date" id="invoice_date" name="invoice_date" style="width:170px" value="<?php echo date('Y-m-d') ?>"></div>
+        <input type="hidden" name="invoice_num" id="invoice_num" value="<?php echo isset($invoice_num) ? $invoice_num : '' ?>">
     </div>
     <div style="margin-right:5px">
-        <div>管理番号</div>
-        <div><input id="invoice_num" name="invoice_num" type="text" style="width:170px"></div>
+        <div>サロンコード</div>
+        <div><input id="client_code" name="client_code" type="text" style="width:170px"></div>
     </div>
     <div style="margin-right:5px">
         <div>サロン名</div>        
@@ -146,36 +204,36 @@
 <table class="invoice_list my-3 wp-list-table widefat fixed striped table-view-list posts">
     <thead>
         <tr>
-            <th scope="col" class="manage-column column-is_in_stock d-none2">No</th>
-            <th scope="col" class="manage-column column-is_in_stock invoice_date">注文日</th>
-            <th scope="col" class="manage-column column-is_in_stock invoice_num">管理番号</th>
-            <th scope="col" class="manage-column column-is_in_stock client">サロン名</th>
-            <th scope="col" class="manage-column column-is_in_stock d-none1">配送先住所</th>
-            <th scope="col" class="manage-column column-is_in_stock address">商品名</th>
+            <th scope="col" class="manage-column column-num d-none1">受注番号</th>
+            <th scope="col" class="manage-column column-invoice_date d-none2">注文日</th>
+            <th scope="col" class="manage-column column-client_code">サロンコード</th>
+            <th scope="col" class="manage-column column-client">サロン名</th>
+            <th scope="col" class="manage-column column-address d-none1">配送先住所</th>
+            <th scope="col" class="manage-column column-product_name">商品名</th>
             <!-- <th>商品名</th> -->
-            <th scope="col" class="manage-column column-is_in_stock d-none2">金額</th>
-            <th scope="col" class="manage-column column-is_in_stock d-none2">数量</th>
-            <th scope="col" class="manage-column column-is_in_stock d-none1">総額</th>
+            <th scope="col" class="manage-column column-money d-none2">金額</th>
+            <th scope="col" class="manage-column column-counts d-none2">数量</th>
+            <th scope="col" class="manage-column column-total d-none1">総額</th>
             <!-- <th scope="col" class="manage-column column-is_in_stock d-none2">納品希望日時</th>           -->
         </tr>
     </thead>
     <tbody>
         <tr class="no-items no_items1"><td class="colspanchange" colspan="9">...</td></tr>
-        <tr class="no-items no_items2"><td class="colspanchange" colspan="7">...</td></tr>
-        <tr class="no-items no_items3"><td class="colspanchange" colspan="4">...</td></tr>
+        <tr class="no-items no_items2"><td class="colspanchange" colspan="6">...</td></tr>
+        <tr class="no-items no_items3"><td class="colspanchange" colspan="3">...</td></tr>
     </tbody>
     <tfoot>
         <tr>
-            <th scope="col" class="manage-column column-is_in_stock d-none2">No</th>
-            <th scope="col" class="manage-column column-is_in_stock invoice_date">注文日</th>
-            <th scope="col" class="manage-column column-is_in_stock invoice_num">管理番号</th>
-            <th scope="col" class="manage-column column-is_in_stock client">サロン名</th>
-            <th scope="col" class="manage-column column-is_in_stock d-none1">配送先住所</th>
-            <th scope="col" class="manage-column column-is_in_stock address">商品名</th>
+            <th scope="col" class="manage-column column-num d-none1">受注番号</th>
+            <th scope="col" class="manage-column column-invoice_date d-none2">注文日</th>
+            <th scope="col" class="manage-column column-client_code">サロンコード</th>
+            <th scope="col" class="manage-column column-client">サロン名</th>
+            <th scope="col" class="manage-column column-address d-none1">配送先住所</th>
+            <th scope="col" class="manage-column column-product_name">商品名</th>
             <!-- <th>商品名</th> -->
-            <th scope="col" class="manage-column column-is_in_stock d-none2">金額</th>
-            <th scope="col" class="manage-column column-is_in_stock d-none2">数量</th>
-            <th scope="col" class="manage-column column-is_in_stock d-none1">総額</th>
+            <th scope="col" class="manage-column column-money d-none2">金額</th>
+            <th scope="col" class="manage-column column-counts d-none2">数量</th>
+            <th scope="col" class="manage-column column-total d-none1">総額</th>
             <!-- <th scope="col" class="manage-column column-is_in_stock d-none2">納品希望日時</th>           -->
         </tr>
     </tfoot>
@@ -188,57 +246,62 @@
 </div>
 <script>
 
-    jQuery( function() {
-     
+    jQuery( function() {     
+        jQuery( "#client_code" ).autocomplete({
+            source: function( request, response ) {
+                jQuery.ajax( {
+                    url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
+                    dataType: "json",
+                    data: {
+                        search: request.term,
+                        shop:'',
+                        ajax:'ajax',
+                        to:'client_codes'
+                    },
+                    success: function( data ) {
+                        response( data );
+                    }
+                });
+            },
+            minLength: 1,
+            select: function( event, ui ) {
+                jQuery("#client").attr('data-id', ui.item.id);
+                jQuery("#client").val(ui.item.name);
+                jQuery("#address").val(ui.item.address);
+                jQuery('#address').attr('title', ui.item.address);
+                get_products(ui.item.shop);
+            //  get_products('');
+            //  console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+            }
+        });
         jQuery( "#client" ).autocomplete({
-          source: function( request, response ) {
-            jQuery.ajax( {
-              url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
-              dataType: "json",
-              data: {
-                search: request.term,
-                shop:'',
-                ajax:'ajax',
-                to:'clients'
-              },
-              success: function( data ) {
-                response( data );
-              }
-            } );
-          },
-          minLength: 1,
-          select: function( event, ui ) {
-            jQuery(this).attr('data-id', ui.item.id);
-            jQuery("#address").val(ui.item.address);
-            jQuery('#address').attr('title', ui.item.address);
-            get_products(ui.item.shop);
-            // get_products('');
-            // console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-          }
-        } );
-  } );
-
-    // jQuery("body").on("input", "#client", function (e) {
-    //     var inputValue = jQuery(this).val();
-    //     if(inputValue == '')
-    //         return;
-
-    //     var options = document.querySelectorAll('#client_list option');
-       
-    //     for(var i = 0; i < options.length; i++) {
-    //         var option = options[i];
-    //         if(option.innerText === inputValue) {
-    //             var address = option.getAttribute('data-address');
-    //             var id = option.getAttribute('data-id');
-    //             jQuery(this).attr('data-id', id);
-    //             jQuery("#address").val(address);
-    //             jQuery('#address').attr('title', address);
-    //             get_products(option.getAttribute('data-shop'));
-    //             return;
-    //         }
-    //     }
-    //     jQuery("#address").val('');
-    // });
+            source: function( request, response ) {
+                jQuery.ajax( {
+                    url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
+                    dataType: "json",
+                    data: {
+                        search: request.term,
+                        shop:'',
+                        ajax:'ajax',
+                        to:'clients'
+                    },
+                    success: function( data ) {
+                        response( data );
+                    }
+                });
+            },
+            minLength: 1,
+            select: function( event, ui ) {
+                jQuery(this).attr('data-id', ui.item.id);
+                jQuery("#address").val(ui.item.address);
+                jQuery("#client_code").val(ui.item.client_code);
+                jQuery('#address').attr('title', ui.item.address);
+                get_products(ui.item.shop);
+            //  get_products('');
+            //  console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+            }
+        });
+    });
     jQuery("body").on("change", "#product_list", function(e) {
         if(jQuery.trim(jQuery(this).val()) == ''){
             jQuery("#price").val('');
@@ -249,31 +312,11 @@
         jQuery("#price").val(jQuery('#product_list option[value='+v+']').data('price'));
         jQuery("#money").val(jQuery("#price").val() * jQuery("#cnt").val());
     });
-
-    // jQuery("input[name='product_list']").on('input', function(e){
-    //     var inputValue = jQuery(this).val();
-
-    //     var options = document.querySelectorAll('#product_list option');
-       
-    //     for(var i = 0; i < options.length; i++) {
-    //         var option = options[i];
-
-    //         if(jQuery.trim(option.innerText) === jQuery.trim(inputValue)) {
-    //             jQuery("#price").val(option.getAttribute('price-value'));
-    //             jQuery("#money").val(jQuery("#price").val() *jQuery("#cnt").val());
-    //             jQuery("#sel_product_id").val(option.getAttribute('data-value'));
-    //             return;
-    //         }
-    //     }
-    //     jQuery("#price").val('');
-    //     jQuery("#money").val('');
-    //     jQuery("#sel_product_id").val('');
-    // });
     var json_arry = new Array();
     function save_product(){
 
         jQuery.ajax({
-            url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+            url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
             type: "post",
             data: {
                 search:'',
@@ -283,8 +326,8 @@
             },
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
-                // if(jQuery.trim(data) == 'ok')
-                //     location.href = "";
+                if(jQuery.trim(data) == 'ok')
+                    location.href = "";
             },
             error: function (data, textStatus, errorThrown) {
                 console.log(data);
@@ -297,7 +340,7 @@
         if(jQuery("#invoice_date").val() == ""){
             return false;
         }
-        if(jQuery("#invoice_num").val() == ""){
+        if(jQuery("#client_code").val() == ""){
             return false;
         }
         // if(jQuery("#shop").val() == ""){
@@ -324,11 +367,10 @@
         // if(jQuery("#delivery_date").val() == ""){
         //     return false;
         // }
-        var row_arry = { 
+        var row_arry = {
             "invoice_date": jQuery("#invoice_date").val(), 
-            "invoice_num": jQuery("#invoice_num").val(), 
+            "client_code": jQuery("#client_code").val(), 
             "client": jQuery("#client").val(), 
-            "client": jQuery("#client").val(),
             "client_id" : jQuery("#client").data('id'),
             "address": jQuery("#address").val(), 
             "product_list": jQuery("#product_list option[value="+jQuery("#product_list").val()+"]").html(), 
@@ -341,11 +383,16 @@
         };
         json_arry.push(row_arry);
 
-        var markup = "<tr><td class='d-none2'>"+(jQuery('table tbody tr').length)+"</td><td>" + jQuery("#invoice_date").val() + "</td><td>" + jQuery("#invoice_num").val() + "</td><td>" + jQuery("#client").val() + 
-                    "</td><td class='d-none1'>" + jQuery("#address").val() + "</td>"+ "<td>" + jQuery("#product_list option[value="+jQuery("#product_list").val()+"]").html() +
-                    "</td><td class='d-none2'>" + parseFloat(jQuery("#price").val()).toLocaleString() + 
-                    "円</td><td class='d-none2'>" + parseFloat(jQuery("#cnt").val()).toLocaleString() + "</td>" + "<td class='d-none1'>" + parseFloat(jQuery("#money").val()).toLocaleString() + "円<span class='money' style='display:none'>"+jQuery("#money").val()+"</span></td>";
-            // markup += "<td class='d-none2'>" + jQuery("#delivery_date").val() + "</td>";
+        var markup = "<tr>";
+                markup += "<td class='d-none1' style='display: table-cell;'>"+(jQuery('#invoice_num').val())+"</td>";
+                markup += "<td class='d-none2' style='display: table-cell;'>" + jQuery("#invoice_date").val() + "</td>";
+                markup += "<td style='display: table-cell;'>" + jQuery("#client_code").val() + "</td>";
+                markup += "<td style='display: table-cell;'>" + jQuery("#client").val() +"</td>";
+                markup += "<td class='d-none1' style='display: table-cell;'>" + jQuery("#address").val() + "</td>";
+                markup += "<td style='display: table-cell;'>" + jQuery("#product_list option[value="+jQuery("#product_list").val()+"]").html() + "</td>";
+                markup += "<td class='d-none2' style='display: table-cell;'>" + parseFloat(jQuery("#price").val()).toLocaleString() + "円</td>";
+                markup += "<td class='d-none2' style='display: table-cell;'>" + parseFloat(jQuery("#cnt").val()).toLocaleString() + "</td>";
+                markup += "<td class='d-none1' style='display: table-cell;'>" + parseFloat(jQuery("#money").val()).toLocaleString() + "円<span class='money' style='display:none'>"+jQuery("#money").val()+"</span></td>";
             markup += "</tr>";
         jQuery("table tbody").append(markup);
         var t_m = 0;
@@ -365,7 +412,7 @@
     function get_products(shop){
 
         jQuery.ajax({
-            url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+            url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
             type: "post",
             data: {
                 search:'',

@@ -1,11 +1,13 @@
 
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/all.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/all.css" rel="stylesheet" type="text/css">
 <!-- <link href="../wp-content/plugins/membership-ordering-system/assets/css/agency.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <style>
-    input, select{min-height: 33px}
+    input, select{
+        height: 40px !important;
+    }
     [type="number"]::-webkit-inner-spin-button,
     [type="number"]::-webkit-outer-spin-button {
        display:none;
@@ -15,13 +17,16 @@
         word-break: break-word;
     }
     .column-no{
-        width: 10%;
+        width: 5%;
     }
     .column-date{
-        width: 15%;
+        width: 10%;
     }
     .column-num{
-        width: 20%;
+        width: 15%;
+    }
+    .column-client_code{
+        width: 15%;
     }
     .column-client{
         width: 15%;
@@ -32,14 +37,29 @@
     .column-state{
         width: 15%;
     }
-    @media screen and (max-width: 1000px){
+    @media screen and (max-width: 1050px){
         .d-none1{
-            display: none;
+            display: none !important;
+        }
+        .column-date{
+            width: 11%;
+        }
+        .column-num{
+            width: 16%;
+        }
+        .column-client_code{
+            width: 16%;
+        }
+        .column-client{
+            width: 16%;
+        }
+        .column-product{
+            width: 26%;
         }
     }
     @media screen and (max-width: 768px){
         .d-none2{
-            display: none;
+            display: none !important;
         }
         .column-num{
             width: 40%;
@@ -118,18 +138,26 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <?php
 global $wpdb; 
+
+// var_export(wp_get_current_user());
 // $clients = $wpdb->get_results("SELECT * FROM wp_ms_client");
 $paged = isset( $_GET['paged'] ) ? absint( $_GET['paged'] ) : 1;
 $p = isset( $_GET['p'] ) ? $_GET['p'] : '';
 $c = isset( $_GET['c'] ) ? $_GET['c'] : '';
 $d1 = isset( $_GET['d1'] ) ? $_GET['d1'] : '';
 $d2 = isset( $_GET['d2'] ) ? $_GET['d2'] : '';
+$in = isset( $_GET['in'] ) ? $_GET['in'] : '';
+$cc = isset( $_GET['cc'] ) ? $_GET['cc'] : '';
 
 
 $wild = '%';
 $p_like = $wild . $wpdb->esc_like( $p ) . $wild;
 
 $c_like = $wild . $wpdb->esc_like( $c ) . $wild;
+
+$cc_like = $wild . $wpdb->esc_like( $cc ) . $wild;
+
+$in_like = $wild . $wpdb->esc_like( $in ) . $wild;
 
 $limit = 20; // number of rows in page
 
@@ -155,9 +183,11 @@ if($d1 != ''){
     }
 }
 
-$where = $invoice_date.' and client like %s and products like %s';
+$where = $invoice_date.' and client like %s and products like %s and client_code like %s and invoice_num like %s';
 array_push($format, $c_like);
 array_push($format, $p_like);
+array_push($format, $cc_like);
+array_push($format, $in_like);
 // echo "SELECT * FROM wp_ms_invoice_history where $where order by `time` desc";
 // var_export($format);
 $totals = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_invoice_history where $where order by `time` desc", $format));
@@ -184,7 +214,18 @@ $posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_invoice_history 
             <input type="date" id="invoice_date1" name="invoice_date1" style="width:170px" value="<?php echo $d2 ?>">
         </div>
     </div>
-
+    <div style="margin-right:5px">
+        <div>受注番号</div>        
+        <div>
+            <input type="text" name="invoice_num" id="invoice_num" data_id=""  style="width:170px" value="<?php echo $in ?>"/>
+        </div>
+    </div>
+    <div style="margin-right:5px">
+        <div>サロンコード</div>        
+        <div>
+            <input type="text" name="client_code" id="client_code" data_id=""  style="width:170px" value="<?php echo $cc ?>"/>
+        </div>
+    </div>
     <div style="margin-right:5px">
         <div>サロン名</div>        
         <div>
@@ -214,13 +255,13 @@ if($num_of_pages > 1){
                 if($paged <= 2){
                     echo '<span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>';
                 }else{
-                    echo '<a class="first-page button" href="admin.php?page=ms-ordering-sys&paged=1&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'">';
+                    echo '<a class="first-page button" href="admin.php?page=ms-ordering-sys&paged=1&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'&in='.$in.'&cc='.$cc.'">';
                     echo '<span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>';
                 }
                 if($paged <= 1){
                     echo '<span class="tablenav-pages-navspan button disabled" aria-hidden="true" style="margin-left:0.2em">‹</span>';
                 }else{
-                    echo '<a class="prev-page button" href="admin.php?page=ms-ordering-sys&paged='.($paged - 1).'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'" style="margin-left:0.2em">';
+                    echo '<a class="prev-page button" href="admin.php?page=ms-ordering-sys&paged='.($paged - 1).'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'&in='.$in.'&cc='.$cc.'" style="margin-left:0.2em">';
                     echo '<span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>';
                 }
             ?>
@@ -233,14 +274,14 @@ if($num_of_pages > 1){
                 if($paged == $num_of_pages){
                     echo '<span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>';
                 }else{
-                    echo '<a class="prev-page button" href="admin.php?page=ms-ordering-sys&paged='.($paged + 1).'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'">';
+                    echo '<a class="prev-page button" href="admin.php?page=ms-ordering-sys&paged='.($paged + 1).'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'&in='.$in.'&cc='.$cc.'">';
                     echo '<span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>';
                 }
 
                 if($paged == $num_of_pages || $paged == ($num_of_pages - 1)){
                     echo '<span class="tablenav-pages-navspan button disabled" aria-hidden="true" style="margin-left:0.2em">»</span>';
                 }else{
-                    echo '<a class="last-page button" href="admin.php?page=ms-ordering-sys&paged='.$num_of_pages.'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'" style="margin-left:0.2em">';
+                    echo '<a class="last-page button" href="admin.php?page=ms-ordering-sys&paged='.$num_of_pages.'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'&in='.$in.'&cc='.$cc.'" style="margin-left:0.2em">';
                     echo '<span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>';
                 }
             ?>
@@ -261,9 +302,10 @@ if($num_of_pages > 1){
 <table class="wp-list-table widefat fixed striped table-view-list posts">
     <thead>
         <tr>
-            <th scope="col" class="manage-column column-no d-none2">No</th>
+            <th scope="col" class="manage-column column-no d-none1">No</th>
             <th scope="col" class="manage-column column-date d-none2">注文日</th>
-            <th scope="col" class="manage-column column-num">管理番号</th>
+            <th scope="col" class="manage-column column-num">受注番号</th>
+            <th scope="col" class="manage-column column-client_code d-none2">サロンコード</th>
             <th scope="col" class="manage-column column-client">サロン名</th>
             <th scope="col" class="manage-column column-product d-none2">商品名</th>
             <th scope="col" class="manage-column column-state">状態</th>
@@ -273,26 +315,28 @@ if($num_of_pages > 1){
         <?php
             $idx = 0;
             if(!$posts || count($posts) < 1)
-                echo '<tr class="no-item"><td class="colspanchange" colspan="6">...</td></tr>';
+                echo '<tr class="no-item"><td class="colspanchange" colspan="7">...</td></tr>';
             else
                 foreach($posts as $post){
                     $idx++;
                     echo '<tr data-id="'.$post->history_id.'" data-state="'.$post->state.'" class="h_item iedit author-self level-0 post-83 type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
-                    echo '<td class="product_tag column-product_tag d-none2">'.$idx.'</td>';
-                    echo '<td class="product_tag column-product_tag d-none2">'.$post->invoice_date.'</td>';
-                    echo '<td class="product_tag column-product_tag">'.$post->invoice_num.'</td>';
-                    echo '<td class="product_tag column-product_tag">'.$post->client.'</td>';
-                    echo '<td class="product_tag column-product_tag d-none2">'.$post->products.'</td>';
-                    echo '<td class="product_tag column-product_tag">'.$post->state.'</td>';
+                    echo '<td class="product_tag column-product_tag d-none1" style="display: table-cell;">'.$idx.'</td>';
+                    echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->invoice_date.'</td>';
+                    echo '<td class="product_tag column-product_tag" style="display: table-cell;">'.$post->invoice_num.'</td>';
+                    echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->client_code.'</td>';
+                    echo '<td class="product_tag column-product_tag" style="display: table-cell;">'.$post->client.'</td>';
+                    echo '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'.$post->products.'</td>';
+                    echo '<td class="product_tag column-product_tag" style="display: table-cell;">'.$post->state.'</td>';
                     echo '</tr>';
                 }
         ?>
     </tbody>
     <tfoot>
         <tr>
-            <th scope="col" class="manage-column column-is_in_stock d-none2">No</th>
+            <th scope="col" class="manage-column column-is_in_stock d-none1">No</th>
             <th scope="col" class="manage-column column-is_in_stock d-none2">注文日</th>
-            <th scope="col" class="manage-column column-is_in_stock">管理番号</th>
+            <th scope="col" class="manage-column column-is_in_stock">受注番号</th>
+            <th scope="col" class="manage-column column-client_code d-none2">サロンコード</th>
             <th scope="col" class="manage-column column-is_in_stock">サロン名</th>
             <th scope="col" class="manage-column column-is_in_stock d-none2">商品名</th>
             <th scope="col" class="manage-column column-is_in_stock">状態</th>
@@ -310,13 +354,13 @@ if($num_of_pages > 1){
                 if($paged <= 2){
                     echo '<span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>';
                 }else{
-                    echo '<a class="first-page button" href="admin.php?page=ms-ordering-sys&paged=1&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'">';
+                    echo '<a class="first-page button" href="admin.php?page=ms-ordering-sys&paged=1&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'&in='.$in.'&cc='.$cc.'">';
                     echo '<span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>';
                 }
                 if($paged <= 1){
                     echo '<span class="tablenav-pages-navspan button disabled" aria-hidden="true" style="margin-left:0.2em">‹</span>';
                 }else{
-                    echo '<a class="prev-page button" href="admin.php?page=ms-ordering-sys&paged='.($paged - 1).'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'" style="margin-left:0.2em">';
+                    echo '<a class="prev-page button" href="admin.php?page=ms-ordering-sys&paged='.($paged - 1).'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'&in='.$in.'&cc='.$cc.'" style="margin-left:0.2em">';
                     echo '<span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>';
                 }
             ?>
@@ -329,14 +373,14 @@ if($num_of_pages > 1){
                 if($paged == $num_of_pages){
                     echo '<span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>';
                 }else{
-                    echo '<a class="prev-page button" href="admin.php?page=ms-ordering-sys&paged='.($paged + 1).'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'">';
+                    echo '<a class="prev-page button" href="admin.php?page=ms-ordering-sys&paged='.($paged + 1).'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'&in='.$in.'&cc='.$cc.'">';
                     echo '<span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>';
                 }
 
                 if($paged == $num_of_pages || $paged == ($num_of_pages - 1)){
                     echo '<span class="tablenav-pages-navspan button disabled" aria-hidden="true" style="margin-left:0.2em">»</span>';
                 }else{
-                    echo '<a class="last-page button" href="admin.php?page=ms-ordering-sys&paged='.$num_of_pages.'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'" style="margin-left:0.2em">';
+                    echo '<a class="last-page button" href="admin.php?page=ms-ordering-sys&paged='.$num_of_pages.'&p='.$p.'&c='.$c.'&d1='.$d1.'&d2='.$d2.'&in='.$in.'&cc='.$cc.'" style="margin-left:0.2em">';
                     echo '<span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>';
                 }
             ?>
@@ -368,9 +412,10 @@ if($num_of_pages > 1){
                         <table  class="wp-list-table widefat fixed striped table-view-list posts w-100" style="margin-top:10px;">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="manage-column column-is_in_stock d-none2">No</th>
+                                    <th scope="col" class="manage-column column-is_in_stock d-none1" style="width:5%">No</th>
                                     <th scope="col" class="manage-column column-is_in_stock d-none2">注文日</th>
-                                    <th scope="col" class="manage-column column-is_in_stock">管理番号</th>
+                                    <th scope="col" class="manage-column column-is_in_stock">受注番号</th>
+                                    <th scope="col" class="manage-column column-is_in_stock d-none2">サロンコード</th>
                                     <th scope="col" class="manage-column column-is_in_stock">サロン名</th>
                                     <th scope="col" class="manage-column column-is_in_stock d-none1">配送先住所</th>
                                     <th scope="col" class="manage-column column-is_in_stock">商品名</th>
@@ -385,9 +430,10 @@ if($num_of_pages > 1){
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th scope="col" class="manage-column column-is_in_stock d-none2">No</th>
+                                    <th scope="col" class="manage-column column-is_in_stock d-none1" style="width:5%">No</th>
                                     <th scope="col" class="manage-column column-is_in_stock d-none2">注文日</th>
-                                    <th scope="col" class="manage-column column-is_in_stock">管理番号</th>
+                                    <th scope="col" class="manage-column column-is_in_stock">受注番号</th>
+                                    <th scope="col" class="manage-column column-is_in_stock d-none2">サロンコード</th>
                                     <th scope="col" class="manage-column column-is_in_stock">サロン名</th>
                                     <th scope="col" class="manage-column column-is_in_stock d-none1">配送先住所</th>
                                     <th scope="col" class="manage-column column-is_in_stock">商品名</th>
@@ -399,7 +445,7 @@ if($num_of_pages > 1){
                             </tfoot>
                         </table>
                         <div class="text-right mt-2">
-                            <input type="button" id="agree_btn" data-id="" onclick="agree()" class="button" value="確定" style="margin-bottom: 0px">
+                            <input type="button" id="agree_btn" data-id="" class="button" value="確定" style="margin-bottom: 0px">
                         </div>
                     </div>
                 </div>
@@ -410,7 +456,7 @@ if($num_of_pages > 1){
         </div>
     </div>
 </div>
-<script src="../wp-content/plugins/membership-ordering-system/assets/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo plugin_dir_url( __FILE__) ?>assets/js/bootstrap.bundle.min.js"></script>
 <script>
 var myModal = null;
     jQuery( function() {
@@ -419,19 +465,20 @@ var myModal = null;
             if(invoice == '')
                 return;
             jQuery.ajax( {
-              url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+              url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
               type: "get",
               data: {
                 invoice:invoice,
-                to:'confirm'
+                to:'delivery'
               },
               success: function( data ) {
-                location.href = "admin.php?page=ms-ordering-sys";
+                if(jQuery.trim(data) == 'ok')
+                    location.href = "admin.php?page=ms-ordering-sys";
               }
             } );
         });
         jQuery("body").on("click", "#search-submit", function (e) {
-            location.href = "admin.php?page=ms-ordering-sys&p="+jQuery('#product_list').val()+"&c="+jQuery('#client').val()+"&d1="+jQuery('#invoice_date').val()+"&d2="+jQuery('#invoice_date1').val();
+            location.href = "admin.php?page=ms-ordering-sys&p="+jQuery('#product_list').val()+"&c="+jQuery('#client').val()+"&d1="+jQuery('#invoice_date').val()+"&d2="+jQuery('#invoice_date1').val()+"&in="+jQuery('#invoice_num').val()+"&cc="+jQuery("#client_code").val();
         });
 
         jQuery("body").on("click", "#modal_table_2 .btn-close", function (e) {
@@ -441,7 +488,7 @@ var myModal = null;
 
         jQuery("body").on("keypress", ".current-page", function(e) {
             if(e.keyCode == 13){
-                location.href = "admin.php?page=ms-ordering-sys&paged="+jQuery(this).val()+"&p="+jQuery('#product_list').val()+"&c="+jQuery('#client').val()+"&d1="+jQuery('#invoice_date').val()+"&d2="+jQuery('#invoice_date1').val();
+                location.href = "admin.php?page=ms-ordering-sys&paged="+jQuery(this).val()+"&p="+jQuery('#product_list').val()+"&c="+jQuery('#client').val()+"&d1="+jQuery('#invoice_date').val()+"&d2="+jQuery('#invoice_date1').val()+"&in="+jQuery('#invoice_num').val()+"&cc="+jQuery("#client_code").val();
             }
         });
         jQuery("body").on("click", ".h_item", function(e) {
@@ -449,7 +496,7 @@ var myModal = null;
             var id = jQuery(this).data('id');
             var state = jQuery(this).data('state');
             jQuery.ajax({
-                url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+                url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
                 type: "post",
                 data: {
                     id:id,
@@ -472,21 +519,22 @@ var myModal = null;
                     var s = "";
                     for(var i=0;i<dList.length;i++){
                         s += '<tr data-id="'+dList[i].history_id+'" class="iedit author-self level-0 post-83 type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
-                        s += '<td class="product_tag column-product_tag d-none2">'+(i+1)+'</td>';
-                        s += '<td class="product_tag column-product_tag d-none2">'+dList[i].invoice_date+'</td>';
-                        s += '<td class="product_tag column-product_tag">'+dList[i].invoice_num+'</td>';
-                        s += '<td class="product_tag column-product_tag">'+dList[i].client+'</td>';
-                        s += '<td class="product_tag column-product_tag d-none1">'+dList[i].address+'</td>';
-                        s += '<td class="product_tag column-product_tag">'+dList[i].product_list+'</td>';
-                        s += '<td class="product_tag column-product_tag d-none2">'+parseFloat(dList[i].price).toLocaleString()+'円</td>';
-                        s += '<td class="product_tag column-product_tag d-none2">'+parseFloat(dList[i].cnt).toLocaleString()+'</td>';
-                        s += '<td class="product_tag column-product_tag d-none1">'+parseFloat(dList[i].money).toLocaleString()+'円</td>';
-                        s += '<td class="product_tag column-product_tag d-none2">'+dList[i].delivery_date+'</td>';
+                        s += '<td class="product_tag column-product_tag d-none1" style="display: table-cell;">'+(i+1)+'</td>';
+                        s += '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'+dList[i].invoice_date+'</td>';
+                        s += '<td class="product_tag column-product_tag" style="display: table-cell;">'+dList[i].invoice_num+'</td>';
+                        s += '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'+dList[i].client_code+'</td>';
+                        s += '<td class="product_tag column-product_tag" style="display: table-cell;">'+dList[i].client+'</td>';
+                        s += '<td class="product_tag column-product_tag d-none1" style="display: table-cell;">'+dList[i].address+'</td>';
+                        s += '<td class="product_tag column-product_tag" style="display: table-cell;">'+dList[i].product_list+'</td>';
+                        s += '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'+parseFloat(dList[i].price).toLocaleString()+'円</td>';
+                        s += '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'+parseFloat(dList[i].cnt).toLocaleString()+'</td>';
+                        s += '<td class="product_tag column-product_tag d-none1" style="display: table-cell;">'+parseFloat(dList[i].money).toLocaleString()+'円</td>';
+                        s += '<td class="product_tag column-product_tag d-none2" style="display: table-cell;">'+dList[i].delivery_date+'</td>';
                         s += '</tr>';
                     }
                     jQuery('.details_list_body').append(s);
                     myModal.show();
-                    if(state != '完了'){
+                    if(state == '請求中'){
                         jQuery('#agree_btn').attr('data-id', id);
                         jQuery('#agree_btn').prop('disabled', false);
                     }else{
@@ -502,7 +550,7 @@ var myModal = null;
   } );
 function get_products(shop){
     jQuery.ajax({
-        url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+        url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
         type: "post",
         data: {
             search:'',

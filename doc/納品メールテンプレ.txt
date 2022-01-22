@@ -20,3 +20,50 @@
 
 E-Mail：xxx@xxxx.jp
 -------------------------------------------------------------
+
+http://kinujo.jp/wp-admin/
+ID：        decision
+PASS：        kobayashitokinujo
+
+FTPでのアクセスが必要であれば、
+下記情報にてアクセスをお願いします。
+
+サーバー名：sv955.xserver.jp
+ホスト名：creative@kinujo.jp
+パスワード：e-m9J67hs2EJ4gh
+1/19 16:15
+
+https://www.xserver.ne.jp/login_server.php
+ID：	decision
+PASS：	93kfhsi09rjgk7u
+
+またプラグインを有効化にすると
+現サイトに影響が出るので、無効化にしています。
+影響内容としては、下記のような固定ページの内容が表示されなくなります。
+https://www.kinujo.jp/products_world/
+
+http://decision.xsrv.jp/test/wp-login.php
+ID：admin
+PASS：K4teAbEw9K1
+
+Basic認証
+ID：kinujo
+PASS：Sd6CFmV9
+
+FTP情報
+サーバー：sv955.xserver.jp
+ユーザー名：kinujo@decision.xsrv.jp
+パスワード：vOe9!Bfd#M
+1/21 18:36
+moon
+moon
+(roger)
+ありがとうございます。
+確認します。
+1/21 19:10
+moon
+moon
+「新規追加」ボタンを押すとエラーメッセージが表示されます。
+修正お願いします。
+New file uploaded.
+

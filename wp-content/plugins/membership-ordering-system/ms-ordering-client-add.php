@@ -1,4 +1,4 @@
-<link href="../wp-content/plugins/membership-ordering-system/assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo plugin_dir_url( __FILE__) ?>assets/css/sb-admin-2.min.css" rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
@@ -28,12 +28,15 @@ function imgUpload($img){
 global $wpdb;
 $post = null;
 $table = $wpdb->prefix.'ms_client';
+$shop_id = isset($_REQUEST['shop']) ? $_REQUEST['shop'] : '';
 $_shop = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_shop where id = %d", $_REQUEST['shop']));
 $shop_item =$_shop[0];
 if($_REQUEST['action'] == 'createuser'){
 	$imageName1 = imgUpload($_REQUEST['photo_base64']);
 	
-	$data = array('name' => isset($_REQUEST['name']) ? trim($_REQUEST['name']) : '', 
+	$data = array(
+                    'client_code' => isset($_REQUEST['client_code']) ? trim($_REQUEST['client_code']) : '',
+                    'name' => isset($_REQUEST['name']) ? trim($_REQUEST['name']) : '', 
 					'shop_id' => isset($_REQUEST['shop']) ? $_REQUEST['shop'] : '', 
                     'shop' => isset($shop_item) ? $shop_item->shop_name : '',
                     'client_post' => isset($_REQUEST['client_post']) ? $_REQUEST['client_post'] : '', 
@@ -44,7 +47,7 @@ if($_REQUEST['action'] == 'createuser'){
 					'mail' => isset($_REQUEST['mail']) ? $_REQUEST['mail'] : '',  
                     'time' => date('Y-m-d H:i:s'),
 					'shipping_info' => isset($_REQUEST['shipping_info']) ? $_REQUEST['shipping_info'] : '');
-    $format = array('%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
+    $format = array('%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
 	if(is_file(__DIR__."/assets/client/".$imageName1)){
         $data['img'] = $imageName1;
         array_push($format, '%s');
@@ -55,6 +58,7 @@ if($_REQUEST['action'] == 'createuser'){
 }
 if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && $_REQUEST['action'] == 'update'){
     $data = array(
+                    'client_code' => isset($_REQUEST['client_code']) ? trim($_REQUEST['client_code']) : '',
                     'name' => isset($_REQUEST['name']) ? trim($_REQUEST['name']) : '', 
                     'shop_id' => isset($_REQUEST['shop']) ? $_REQUEST['shop'] : '', 
                     'shop' => isset($shop_item) ? $shop_item->shop_name : '',
@@ -67,7 +71,7 @@ if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && $_REQUEST['action'] == '
                     'time' => date('Y-m-d H:i:s'),
                     'shipping_info' => isset($_REQUEST['shipping_info']) ? $_REQUEST['shipping_info'] : '');
     $imageName1 = imgUpload($_REQUEST['photo_base64']);
-    $format = array('%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
+    $format = array('%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
     if(is_file(__DIR__."/assets/client/".$imageName1)){
         $data['img'] = $imageName1;
         array_push($format, '%s');
@@ -78,13 +82,15 @@ if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && $_REQUEST['action'] == '
 }
 if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && $_REQUEST['action'] == 'delete'){
     // $result = $wpdb->delete($table, );
-    $result = $wpdb->query($wpdb->prepare("delete from ".$table." where id = %d", $_REQUEST['id']));
+    $c_id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
+    $result = $wpdb->query($wpdb->prepare("delete from ".$table." where id = %d", $c_id));
     // var_export($result);
     if($result)
         echo '<script type="text/javascript">location.href="admin.php?page=ms-ordering-client"</script>';
 }
 if(isset($_REQUEST['i']) && !empty($_REQUEST['i'])){
-	$posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_client where id = %d", $_REQUEST['i']));
+    $cid = isset($_REQUEST['i']) ? $_REQUEST['i'] : '';
+	$posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM wp_ms_client where id = %d", $cid));
 	$post =$posts[0];
     // echo $post->shop;
 }
@@ -171,12 +177,16 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 
 		<table class="form-table" role="presentation">
 			<tbody>
+                <tr class="form-field form-required">                   
+                    <th scope="row"><label for="client_code">サロンコード</label></th>
+                    <td><input name="client_code" type="text" id="client_code" aria-required="true" autocapitalize="none" autocorrect="off" maxlength="60" value="<?php echo isset($post) ? $post->client_code : '' ?>"></td>
+                </tr>
 				<tr class="form-field form-required">					
-					<th scope="row"><label for="user_login">サロン名</label></th>
+					<th scope="row"><label for="name">サロン名</label></th>
 					<td><input name="name" type="text" id="name" aria-required="true" autocapitalize="none" autocorrect="off" maxlength="60" value="<?php echo isset($post) ? $post->name : '' ?>"></td>
 				</tr>
 				<tr class="form-field form-required">
-					<th scope="row"><label for="user_login">取扱代理店</label></th>
+					<th scope="row"><label for="shop">取扱代理店</label></th>
 					<td>
                         <select id="shop" name="shop">
                             <!-- <option value=""></option> -->
@@ -200,7 +210,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 					<td><input name="address" type="text" id="address" aria-required="true" autocapitalize="none" autocorrect="off" maxlength="100" value="<?php //echo isset($post) ? $post->address : '' ?>"></td>
 				</tr> -->
                 <tr class="form-field form-required">
-                    <th scope="row"><label for="user_login">住所</label></th>
+                    <th scope="row"><label for="client_post">住所</label></th>
                     <td>
                         <div>
                             <input name="client_post" type="text" id="client_post" placeholder='郵便番号' aria-required="true" autocapitalize="none" autocorrect="off" maxlength="100" value="<?php echo isset($post) ? $post->client_post : '' ?>">
@@ -219,15 +229,15 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
                     </td>
                 </tr>
 				<tr class="form-field form-required">
-					<th scope="row"><label for="user_login">電話番号</label></th>
+					<th scope="row"><label for="tel">電話番号</label></th>
 					<td><input name="tel" type="text" id="tel" aria-required="true" autocapitalize="none" autocorrect="off" maxlength="60" value="<?php echo isset($post) ? $post->tel : '' ?>"></td>
 				</tr>
 				<tr class="form-field form-required">
-					<th scope="row"><label for="user_login">E-mail</label></th>
+					<th scope="row"><label for="mail">E-mail</label></th>
 					<td><input name="mail" type="text" id="mail" aria-required="true" autocapitalize="none" autocorrect="off" maxlength="60" value="<?php echo isset($post) ? $post->mail : '' ?>"></td>
 				</tr>
 				<tr class="form-field form-required">
-					<th scope="row"><label for="user_login">配送先住所<br><span class="text-danger">※登録住所と異なる場合のみ</span></label></th>
+					<th scope="row"><label for="shipping_info">配送先住所<br><span class="text-danger">※登録住所と異なる場合のみ</span></label></th>
 					<td><input name="shipping_info" type="text" id="shipping_info" aria-required="true" autocapitalize="none" autocorrect="off" maxlength="600" value="<?php echo isset($post) ? $post->shipping_info : '' ?>"></td>
 				</tr>
 			</tbody>
@@ -288,16 +298,16 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 		</p>
 	</form>
 </div>
-<script src="../wp-content/plugins/membership-ordering-system/assets/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo plugin_dir_url( __FILE__) ?>assets/js/bootstrap.bundle.min.js"></script>
 <!-- <script src="../wp-content/plugins/membership-ordering-system/assets/js/jquery.easing.min.js"></script> -->
-<script src="../wp-content/plugins/membership-ordering-system/assets/js/sb-admin-2.min.js"></script>
+<script src="<?php echo plugin_dir_url( __FILE__) ?>assets/js/sb-admin-2.min.js"></script>
 <!-- <script src="../wp-content/plugins/membership-ordering-system/assets/js/jquery.autosize.min.js"></script> -->
 <script type="text/javascript">
 
     jQuery( function() {
       
         jQuery.ajax( {
-            url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+            url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
             type: "get",
             data: {                
                 shop:'',
@@ -323,7 +333,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
     function selpref(){
         //alert(jQuery('#client_pref').val());
         jQuery.ajax( {
-            url: "../wp-content/plugins/membership-ordering-system/ajax-shop.php",
+            url: "<?php echo plugin_dir_url( __FILE__) ?>ajax-shop.php",
             type: "get",
             data: {
                 pref:jQuery('#client_pref').val(),                 
@@ -420,6 +430,10 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
         jQuery('#photo_base64').val('');
 	});
     jQuery("body").on("click", "#create, #update", function (e) {
+        if(jQuery.trim(jQuery('#client_code').val()) == ''){
+            jQuery('#client_code').addClass('errors');
+            return;
+        }
         if(jQuery.trim(jQuery('#name').val()) == ''){
             jQuery('#name').addClass('errors');
             return;
@@ -463,7 +477,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
         }
         jQuery('#createuser').submit();
     });
-    jQuery("body").on("focus", "#shop, #name, #address, #tel, #mail, #shipping_info", function (e) {
+    jQuery("body").on("focus", "#shop, #name, #address, #tel, #mail, #shipping_info, #client_code", function (e) {
         jQuery(this).removeClass('errors');
     });
     jQuery("body").on("click", "#delete", function (e) {

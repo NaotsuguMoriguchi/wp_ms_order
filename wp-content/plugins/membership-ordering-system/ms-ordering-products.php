@@ -4,7 +4,7 @@ $del = isset( $_POST['del'] ) ? absint( $_POST['del'] ) : 0;
 if($del != 0){
 	$ids = $_POST['post'];
 	$ids_str = implode(',', $ids);
-	$wpdb->query($wpdb->prepare("DELETE FROM wp_ms_products WHERE id in (".$ids_str.")"));
+	$wpdb->query("DELETE FROM wp_ms_products WHERE id in (".$ids_str.")");
 }
 
 $paged = isset( $_GET['paged'] ) ? absint( $_GET['paged'] ) : 1;
@@ -60,7 +60,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
     .column-thumb{
     	width: 20%;
     }
-    .column-name{
+    .column-product-name{
     	width: 15%;
     }
     .column-price{
@@ -71,7 +71,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
     }
     @media screen and (max-width: 1000px){
         .d-none1{
-            display: none;
+            display: none !important;
         }
 	    .check-column{
 	    	width: 10%;
@@ -79,7 +79,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 	    .column-thumb{
 	    	width: 30%;
 	    }
-	    .column-name{
+	    .column-product-name{
 	    	width: 25%;
 	    }
 	    .column-price{
@@ -88,9 +88,9 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
     }
     @media screen and (max-width: 768px){
         .d-none2{
-            display: none;
+            display: none !important;
         }
-	    .column-name{
+	    .column-product-name{
 	    	width: 45%;
 	    }
 	    .column-price{
@@ -209,7 +209,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 		        <tr>
 		            <td id="cb" class="manage-column column-cb check-column"><input id="cb-select-all-1" type="checkbox"></td>
 		            <th scope="col" id="thumb" class="manage-column column-thumb d-none2"><span class="wc-image tips">Image</span></th>
-		            <th scope="col" class="manage-column column-name">商品名</th>
+		            <th scope="col" class="manage-column column-product-name">商品名</th>
 		            <th scope="col" class="manage-column column-price">価格</th>
 		            <th scope="col" class="manage-column column-comment d-none1">製品の簡単な説明</th>
 		        </tr>
@@ -223,14 +223,14 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 				        foreach($products as $product){
 				        	$idx++; 
 				        	echo '<tr data-id="'.$product->id.'" class="h_item iedit author-self level-0 post-'.$product->id.' type-product status-publish has-post-thumbnail hentry product_cat-uncategorized">';
-			                echo '<th scope="row" class="check-column"><input class="shop_select" type="checkbox" name="post[]" value="'.$product->id.'"></th>';
-			                echo '<td class="thumb column-thumb d-none2" data-colname="Image">';
-			                echo '<img width="150" height="150" src="../wp-content/plugins/membership-ordering-system/assets/product/'.$product->img.'" class="attachment-thumbnail size-thumbnail product_img" alt="" loading="lazy">';
+			                echo '<th scope="row" class="check-column" style="display: table-cell;"><input class="shop_select" type="checkbox" name="post[]" value="'.$product->id.'"></th>';
+			                echo '<td class="thumb column-thumb d-none2" data-colname="Image" style="display: table-cell;">';
+			                echo '<img width="150" height="150" src="'.plugin_dir_url( __FILE__).'assets/product/'.$product->img.'" class="attachment-thumbnail size-thumbnail product_img" alt="" loading="lazy">';
 			                echo '</td>';
-			                echo '<td class="product_tag column-product_tag">';
+			                echo '<td class="product_tag column-product_tag" style="display: table-cell;">';
 			                echo '<strong><a href="admin.php?page=ms-ordering-products-add&i='.$product->id.'">'.$product->name.'</a><strong>';
 			                echo '</td>';
-			                echo '<td class="product_tag column-product_tag">';
+			                echo '<td class="product_tag column-product_tag" style="display: table-cell;">';
 			                if($product->sale != 0){
 			                	echo '<del aria-hidden="true">'.number_format($product->regular).$product->currency.'</del>';
 			                	echo '&nbsp;&nbsp;';
@@ -239,7 +239,7 @@ $shops = $wpdb->get_results("SELECT * FROM wp_ms_shop");
 			                	echo '<span>'.number_format($product->regular).$product->currency.'</span>';
 			                }
 			                echo '</td>';
-			                echo '<td class="product_tag column-product_tag d-none1">'.$product->comment.'</td>';
+			                echo '<td class="product_tag column-product_tag d-none1" style="display: table-cell;">'.$product->comment.'</td>';
 			                echo '</tr>';
 				        }
 		        ?>
